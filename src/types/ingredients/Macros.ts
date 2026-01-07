@@ -11,13 +11,5 @@ export type Macros = {
 };
 
 
-export const objectMacroKeys: (keyof Pick<Macros, "energy" | "fats" | "carbs">)[] = [
-  "energy",
-  "fats",
-  "carbs",
-];
-
-export const numericMacroKeys: (keyof Pick<Macros, "protein" | "salt">)[] = [
-  "protein",
-  "salt",
-];
+export const objectMacroKeys = ["energy", "fats", "carbs"] as const
+export const numericMacroKeys = ["protein", "salt"] as const

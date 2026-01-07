@@ -2,14 +2,15 @@ import type { Ingredient } from "../ingredients/Ingredient";
 
 export type RecipeIngredient = {
   ingredient: Ingredient;
-  amount: number; // in grams
+  amount: number;
+  unit: string;
 };
 
 export type Recipe = {
   name: string;
   imgPath?: string;
   ingredients: RecipeIngredient[];
-  time: string; // e.g., "30 min"
-  process: string[]; // array of steps
+  time: string; 
+  process: string[];
   servings: number;
 };
