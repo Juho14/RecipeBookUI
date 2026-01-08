@@ -1,10 +1,12 @@
-import { Drawer, IconButton } from '@mui/material'
+import { Button, Drawer, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PAGES } from '../../types/navigation/PageConfig'
 import DrawerSearch from './DrawerSearch'
 import RecipeList from './RecipeList'
+import GlobalDialog from '../dialog/GlobalDialog'
+import RecipeSelector from '../../components/recipies/RecipeSelector'
 
 const DrawerNav = () => {
   const [open, setOpen] = useState(false)
@@ -16,7 +18,6 @@ const DrawerNav = () => {
     setOpen(false)
   }
 
-  // Flatten recipe pages for filtering
   const allRecipePages = useMemo(() => {
     return PAGES.flatMap((page) => {
       if ('children' in page && page.isRecipe) {
@@ -29,7 +30,6 @@ const DrawerNav = () => {
     })
   }, [])
 
-  // Filter recipe pages based on search term
   const filteredRecipes = useMemo(() => {
     if (!searchTerm) return allRecipePages
     const term = searchTerm.toLowerCase()
@@ -41,6 +41,14 @@ const DrawerNav = () => {
     )
   }, [searchTerm, allRecipePages])
 
+  const [showRecipeDialog, setShowRecipeDialog] = useState(false)
+
+  const handleOpenRecipeDialog = () => setShowRecipeDialog(true)
+  const handleCloseRecipeDialog = () => {
+    setShowRecipeDialog(false)
+    setOpen(false)
+  }
+
   return (
     <>
       <IconButton
@@ -51,12 +59,27 @@ const DrawerNav = () => {
       </IconButton>
 
       <Drawer open={open} onClose={() => setOpen(false)}>
+        <Button
+          fullWidth
+          variant='contained'
+          color='primary'
+          sx={{ mb: 2 }}
+          onClick={handleOpenRecipeDialog}
+        >
+          All recipies
+        </Button>
         <DrawerSearch value={searchTerm} onChange={setSearchTerm} />
         <RecipeList
           recipes={searchTerm ? filteredRecipes : (PAGES as any)}
           onNavigate={handleNavigate}
         />
       </Drawer>
+      <GlobalDialog
+        title='Select Recipe'
+        isOpen={showRecipeDialog}
+        onClose={handleCloseRecipeDialog}
+        content={RecipeSelector}
+      />
     </>
   )
 }
