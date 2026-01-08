@@ -9,9 +9,9 @@ const Ingredients = () => {
     <>
       <h3>Ingredients</h3>
       <ul>
-        {recipe.ingredients.map(({ ingredient, amount, unit }) => (
+        {recipe.ingredients.map(({ ingredient, amount, alt_amount, unit }) => (
           <li key={ingredient.name}>
-            {ingredient.name} – {amount} {unit}
+            {ingredient.name} – {alt_amount ?? amount} {unit}
           </li>
         ))}
       </ul>

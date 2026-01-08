@@ -1,30 +1,31 @@
-import type { Ingredient } from "../types/ingredients/Ingredient";
+import type { Ingredient } from '../types/ingredients/Ingredient'
 
+// Macros displayed as per 100g
 export const INGREDIENTS: Record<string, Ingredient> = {
   TOMATO: {
-    name: "Tomato",
+    name: 'Tomato',
     macros: {
-      energy: { kj: 74, kcal: 18 },
+      kcal: 18,
       fats: { total: 0.2, saturated: 0 },
       carbs: { total: 3.9, sugars: 2.6 },
       protein: 0.9,
       salt: 0.01,
     },
   },
-  CHICKEN_BREAST: {
-    name: "Chicken Breast",
+  CHICKEN_STRIPS: {
+    name: 'Chicken strips',
     macros: {
-      energy: { kj: 650, kcal: 155 },
-      fats: { total: 3.6, saturated: 1 },
+      kcal: 110,
+      fats: { total: 2.1, saturated: 0.5 },
       carbs: { total: 0, sugars: 0 },
-      protein: 31,
-      salt: 0.1,
+      protein: 23,
+      salt: 0.12,
     },
   },
   OLIVE_OIL: {
-    name: "Olive Oil",
+    name: 'Olive Oil',
     macros: {
-      energy: { kj: 3700, kcal: 884 },
+      kcal: 884,
       fats: { total: 100, saturated: 14 },
       carbs: { total: 0, sugars: 0 },
       protein: 0,
@@ -32,13 +33,23 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
   },
   SUGAR: {
-    name: "Sugar",
+    name: 'Sugar',
     macros: {
-      energy: { kj: 1700, kcal: 400 },
+      kcal: 400,
       fats: { total: 0, saturated: 0 },
       carbs: { total: 100, sugars: 100 },
       protein: 0,
       salt: 0,
     },
   },
-};
+  JASMIN_RICE: {
+    name: 'Jasmin rice',
+    macros: {
+      kcal: 347,
+      fats: { total: 0.5, saturated: 0.2 },
+      carbs: { total: 78, sugars: 0 },
+      protein: 7,
+      salt: 0,
+    },
+  },
+}

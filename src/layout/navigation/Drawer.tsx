@@ -1,60 +1,61 @@
-import {
-  Drawer,
-  List,
-  ListItemButton,
-  ListItemText,
-  IconButton,
-} from '@mui/material'
-import { PAGES } from '../../constants/Pages'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Drawer, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { PAGES } from '../../types/navigation/PageConfig'
+import DrawerSearch from './DrawerSearch'
+import RecipeList from './RecipeList'
 
 const DrawerNav = () => {
-  const drawerList = Object.keys(PAGES) as Array<keyof typeof PAGES>
-  const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
 
-  const handleOpen = () => setIsOpen(true)
-  const closeDrawer = () => setIsOpen(false)
-
-  const handleNavigate = (pageKey: keyof typeof PAGES) => {
-    navigate(PAGES[pageKey])
-    closeDrawer()
+  const handleNavigate = (path: string) => {
+    navigate(path)
+    setOpen(false)
   }
+
+  // Flatten recipe pages for filtering
+  const allRecipePages = useMemo(() => {
+    return PAGES.flatMap((page) => {
+      if ('children' in page && page.isRecipe) {
+        return page.children.map((child) => ({
+          ...child,
+          parentLabel: page.label,
+        }))
+      }
+      return []
+    })
+  }, [])
+
+  // Filter recipe pages based on search term
+  const filteredRecipes = useMemo(() => {
+    if (!searchTerm) return allRecipePages
+    const term = searchTerm.toLowerCase()
+    return allRecipePages.filter(
+      (recipe) =>
+        recipe.label.toLowerCase().includes(term) ||
+        recipe.path.toLowerCase().includes(term) ||
+        recipe.parentLabel?.toLowerCase().includes(term)
+    )
+  }, [searchTerm, allRecipePages])
 
   return (
     <>
       <IconButton
-        onClick={handleOpen}
-        sx={{
-          position: 'fixed',
-          top: 16,
-          left: 16,
-          bgcolor: 'primary.main',
-          color: 'white',
-          '&:hover': {
-            bgcolor: 'primary.dark',
-          },
-          borderRadius: '50%',
-          width: 56,
-          height: 56,
-          boxShadow: 3,
-        }}
+        onClick={() => setOpen(true)}
+        sx={{ position: 'fixed', top: 16, left: 16 }}
       >
         <MenuIcon />
       </IconButton>
 
-      <Drawer anchor='left' open={isOpen} onClose={closeDrawer}>
-        <List sx={{ width: 250 }}>
-          {drawerList.map((key) => (
-            <ListItemButton key={key} onClick={() => handleNavigate(key)}>
-              <ListItemText
-                primary={key.charAt(0).toUpperCase() + key.slice(1)}
-              />
-            </ListItemButton>
-          ))}
-        </List>
+      <Drawer open={open} onClose={() => setOpen(false)}>
+        <DrawerSearch value={searchTerm} onChange={setSearchTerm} />
+        <RecipeList
+          recipes={searchTerm ? filteredRecipes : (PAGES as any)}
+          onNavigate={handleNavigate}
+        />
       </Drawer>
     </>
   )

@@ -10,7 +10,7 @@ export const App = () => {
         {/* Wrap all pages inside Layout */}
         <Route element={<Layout />}>
           <Route path='/' element={<FrontPage />} />
-          <Route path='/recipes' element={<Recipes />} />
+          <Route path='/recipes/:category?/:recipe?' element={<Recipes />} />
           {/* Other pages */}
           {/* <Route path="/hoisin-chicken" element={<HoisinChicken />} /> */}
         </Route>

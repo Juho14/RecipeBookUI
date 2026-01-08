@@ -1,11 +1,8 @@
-import type { Macros } from "../../types/ingredients/Macros";
-import { round } from "../NumberUtils/Round";
+import type { Macros } from '../../types/ingredients/Macros'
+import { round } from '../NumberUtils/Round'
 
 export const roundMacros = (macros: Macros, decimals = 2): Macros => ({
-  energy: {
-    kj: round(macros.energy.kj, decimals),
-    kcal: round(macros.energy.kcal, decimals),
-  },
+  kcal: round(macros.kcal, decimals),
   fats: {
     total: round(macros.fats.total, decimals),
     saturated: round(macros.fats.saturated, decimals),

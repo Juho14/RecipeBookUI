@@ -8,7 +8,7 @@ const CookingProcess = () => {
   }
  return (
     <>
-      <h3>Ingredients</h3>
+      <h3>Cooking process</h3>
       <ul>
         {recipe.process.map((process) => (
           <li key={process}>
