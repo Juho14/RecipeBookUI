@@ -1,8 +1,9 @@
-import type { Macros } from "./Macros";
+import type { Macros } from './Macros'
 
 export type Ingredient = {
-  name: string;
-  nameEn?: string;
-  macros: Macros;
+  id: number
+  name: string
+  nameFi?: string
+  macros: Macros
   type: number
-};
+}

@@ -1,25 +1,26 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { TextField, Button, Grid, type SelectChangeEvent } from '@mui/material'
+import { TextField, Button, Grid } from '@mui/material'
 import type { Ingredient } from '../../types/ingredients/Ingredient'
 import { addIngredient } from '../../store/ingredientsSlice'
-import Selector from '../inputs/Selector'
+import Selector from '../form/inputs/Selector'
 import { INGREDIENT_TYPE_OPTIONS } from '../../constants/Data/Ingredients/IngredientTypeOptions'
 
 const IngredientsForm = () => {
   const dispatch = useDispatch()
 
   const [form, setForm] = useState<Ingredient>({
+    id: 0,
     name: '',
-    nameEn: '',
+    nameFi: '',
     type: 1,
     macros: {
       kcal: 0,
       fats: { total: 0, saturated: 0 },
       carbs: { total: 0, sugars: 0 },
       protein: 0,
-      salt: 0,
-    },
+      salt: 0
+    }
   })
 
   const handleChange =
@@ -43,7 +44,7 @@ const IngredientsForm = () => {
   const handleChangeType = (value: number) => {
     setForm((prev) => ({
       ...prev,
-      type: value,
+      type: value
     }))
   }
 
@@ -78,14 +79,15 @@ const IngredientsForm = () => {
           <TextField
             fullWidth
             label='English name'
-            value={form.nameEn}
-            onChange={handleChange('nameEn')}
+            value={form.nameFi}
+            onChange={handleChange('nameFi')}
           />
         </Grid>
 
         {/* Type */}
         <Grid size={{ xs: 6 }}>
           <Selector
+            name={'type'}
             value={form.type}
             options={INGREDIENT_TYPE_OPTIONS}
             onChange={handleChangeType}

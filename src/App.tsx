@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Recipes from './components/recipies/Recipies'
 import Layout from './layout/Layout'
 import FrontPage from './components/frontPage/FrontPage'
-import RecipeForm from './components/recipies/form/RecipeForm'
 import IngredientsForm from './components/ingredients/IngredientsForm'
+import RecipeForm from './components/recipies/form/RecipeForm'
 
 export const App = () => {
   return (

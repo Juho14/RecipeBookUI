@@ -1,0 +1,50 @@
+import {
+  useForm as useHookForm,
+  type FieldValues,
+  type DefaultValues,
+  type Resolver,
+  type UseFormReturn,
+  type SubmitHandler
+} from 'react-hook-form'
+
+interface ExtendedUseFormOptions<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any
+> {
+  defaultValues: DefaultValues<TFieldValues>
+  resolver?: Resolver<TFieldValues, TContext>
+  mode?: 'onBlur' | 'onChange' | 'onSubmit'
+  shouldUnregister?: boolean
+  onSubmit: (data: TFieldValues) => void
+}
+
+export interface ExtendedUseFormReturn<TFieldValues extends FieldValues, TContext = any> extends UseFormReturn<TFieldValues, TContext> {
+  onSubmit: SubmitHandler<TFieldValues>
+}
+
+const useForm = <
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any
+>(
+  options: ExtendedUseFormOptions<TFieldValues, TContext>
+): ExtendedUseFormReturn<TFieldValues, TContext> => {
+  const { defaultValues, resolver, mode = 'onBlur', shouldUnregister = false, onSubmit: userOnSubmit } = options
+
+  const form = useHookForm<TFieldValues, TContext>({
+    defaultValues,
+    resolver,
+    mode,
+    shouldUnregister
+  })
+
+  const onSubmit: SubmitHandler<TFieldValues> = (data) => {
+    userOnSubmit(data)
+  }
+
+  return {
+    ...form,
+    onSubmit
+  }
+}
+
+export default useForm

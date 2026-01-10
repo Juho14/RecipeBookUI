@@ -11,12 +11,17 @@ export type RecipeIngredient = {
   alt_amount?: number
 }
 
+export type RecipeProcessStep = {
+  en: string // Required English step
+  fi?: string // Optional Finnish step
+}
+
 export type Recipe = {
   name: string
   slug: string
   imgPath?: string
   ingredients: RecipeIngredient[]
   time: string
-  process: string[]
+  process: RecipeProcessStep[]
   servings: number
 }

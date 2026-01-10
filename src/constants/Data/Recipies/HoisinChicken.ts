@@ -24,10 +24,12 @@ export const HOISIN_CHICKEN: Recipe = {
     },
   ],
   process: [
-    'Preheat oven to 200°C (390°F).',
-    'Mix hoisin sauce with olive oil and sugar to make a glaze.',
-    'Coat the chicken breasts in the glaze and let marinate for 10 minutes.',
-    'Bake chicken for 20 minutes until cooked through.',
-    'Serve hot with steamed vegetables or rice.',
+    { en: 'Preheat oven to 200°C (390°F).' },
+    { en: 'Mix hoisin sauce with olive oil and sugar to make a glaze.' },
+    {
+      en: 'Coat the chicken breasts in the glaze and let marinate for 10 minutes.',
+    },
+    { en: 'Bake chicken for 20 minutes until cooked through.' },
+    { en: 'Serve hot with steamed vegetables or rice.' },
   ],
 }

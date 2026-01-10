@@ -4,6 +4,7 @@ import { INGREDIENT_TYPE } from '../../../types/ingredients/IngredientTypes'
 // Macros displayed as per 100g
 export const INGREDIENTS: Record<string, Ingredient> = {
   TOMATO: {
+    id: 1,
     name: 'Tomato',
     type: INGREDIENT_TYPE.VEGETABLE,
     macros: {
@@ -15,6 +16,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
   },
   CHICKEN_STRIPS: {
+    id: 2,
     name: 'Chicken strips',
     type: INGREDIENT_TYPE.PROTEIN,
     macros: {
@@ -26,6 +28,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
   },
   OLIVE_OIL: {
+    id: 3,
     name: 'Olive Oil',
     type: INGREDIENT_TYPE.OIL,
     macros: {
@@ -37,6 +40,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
   },
   SUGAR: {
+    id: 4,
     name: 'Sugar',
     type: INGREDIENT_TYPE.SWEETENER,
     macros: {
@@ -48,6 +52,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
   },
   JASMIN_RICE: {
+    id: 5,
     name: 'Jasmin rice',
     type: INGREDIENT_TYPE.CARBS,
     macros: {

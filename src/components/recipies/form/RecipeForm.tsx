@@ -1,157 +1,214 @@
-import { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { TextField, Button, Grid, IconButton, Typography } from '@mui/material'
+import {
+  TextField,
+  Button,
+  Grid,
+  IconButton,
+  Typography,
+  Box
+} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-import type { Recipe, RecipeIngredient } from '../../../types/Recipe/Recipe'
-import type { Ingredient } from '../../../types/ingredients/Ingredient'
+import type { Recipe } from '../../../types/Recipe/Recipe'
+import type { RecipeIngredient } from '../../../types/Recipe/Recipe'
 import { addRecipe } from '../../../store/recipeSlice'
+import Selector from '../../form/inputs/Selector'
+import { INGREDIENTS } from '../../../constants/Data/Ingredients/Ingredients'
+import type { SelectOption } from '../../../types/form/SelectOption'
+import { useFieldArray, Controller, type DefaultValues } from 'react-hook-form'
+import { Form, useForm } from '../../form'
+import TextInput from '../../form/inputs/TextInput'
 
-const emptyIngredient: RecipeIngredient = {
-  ingredient: {} as Ingredient, // placeholder for now
+const defaultIngredient: RecipeIngredient = {
+  ingredient: {} as any,
   amount: 0,
-  unit: 'g',
+  unit: 'g'
 }
+
+const defaultValues: DefaultValues<Recipe> = {
+  name: '',
+  slug: '',
+  imgPath: '',
+  time: '',
+  servings: 1,
+  ingredients: [defaultIngredient],
+  process: [{ en: '' }]
+}
+
+const ingredientOptions: SelectOption<number>[] = Object.values(
+  INGREDIENTS
+).map((ingredient) => ({
+  value: ingredient.id,
+  label: ingredient.name
+}))
 
 const RecipeForm = () => {
   const dispatch = useDispatch()
+  const onSubmit = (data: Recipe) => {
+    dispatch(addRecipe(data))
+  }
 
-  const [form, setForm] = useState<Recipe>({
-    name: '',
-    slug: '',
-    imgPath: '',
-    time: '',
-    servings: 1,
-    ingredients: [],
-    process: [],
+  const form = useForm({
+    defaultValues,
+    onSubmit
+    // resolver This is the validator function. Add later.
   })
 
-  const updateField =
-    (key: keyof Recipe) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        e.target.type === 'number' ? Number(e.target.value) : e.target.value
+  const { control, register} = form
 
-      setForm((prev) => ({ ...prev, [key]: value }))
-    }
+  const {
+    fields: ingredientsFields,
+    append: appendIngredient,
+    remove: removeIngredient
+  } = useFieldArray({
+    control,
+    name: 'ingredients'
+  })
 
-  const addIngredient = () =>
-    setForm((prev) => ({
-      ...prev,
-      ingredients: [...prev.ingredients, structuredClone(emptyIngredient)],
-    }))
-
-  const removeIngredient = (index: number) => {
-    setForm((prev) => ({
-      ...prev,
-      ingredients: prev.ingredients.filter((_, i) => i !== index),
-    }))
-  }
-
-  const addStep = () =>
-    setForm((prev) => ({ ...prev, process: [...prev.process, ''] }))
-
-  const updateStep = (index: number, value: string) => {
-    setForm((prev) => {
-      const process = [...prev.process]
-      process[index] = value
-      return { ...prev, process }
-    })
-  }
-
-  const removeStep = (index: number) => {
-    setForm((prev) => ({
-      ...prev,
-      process: prev.process.filter((_, i) => i !== index),
-    }))
-  }
-
-  const handleSubmit = () => {
-    dispatch(addRecipe(form))
-  }
+  const {
+    fields: processFields,
+    append: appendProcess,
+    remove: removeProcess
+  } = useFieldArray({
+    control,
+    name: 'process'
+  })
 
   return (
-    <Grid
-      container
-      justifyContent={'center'}
-      textAlign={'center'}
-      justifySelf={'center'}
-      rowGap={2}
-      rowSpacing={2}
-      spacing={2}
-      maxWidth={500}
-    >
-      {' '}
-      <Grid size={{ xs: 12 }}>
-        <TextField
-          fullWidth
-          label='Recipe name'
-          value={form.name}
-          onChange={updateField('name')}
-        />
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <TextField
-          fullWidth
-          label='Time'
-          value={form.time}
-          onChange={updateField('time')}
-        />
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <TextField
-          fullWidth
-          label='Servings'
-          type='number'
-          value={form.servings}
-          onChange={updateField('servings')}
-        />
-      </Grid>
-      {/* Ingredients */}
-      <Grid size={{ xs: 12 }}>
-        <Typography variant='h6'>Ingredients</Typography>
-      </Grid>
-      
-      <Grid size={{ xs: 12 }}>
-        <Button startIcon={<AddIcon />} onClick={addIngredient}>
-          Add ingredient
-        </Button>
-      </Grid>
-      {/* Process */}
-      <Grid size={{ xs: 12 }}>
-        <Typography variant='h6'>Cooking process</Typography>
-      </Grid>
-      {form.process.map((step, index) => (
-        <>
-          <Grid size={{ xs: 10 }}>
-            <TextField
-              fullWidth
-              label={`Step ${index + 1}`}
-              value={step}
-              onChange={(e) => updateStep(index, e.target.value)}
-              multiline
-            />
-          </Grid>
+    <Form form={form}>
+      <Grid container spacing={2} maxWidth={500}>
+        {/* Recipe Info */}
+        <Grid size={{ xs: 12 }}>
+          <TextInput
+            name='name'
+            label={'Recipe name'}
+          />
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <TextField fullWidth label='Time' {...register('time')} />
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <TextField
+            fullWidth
+            label='Servings'
+            type='number'
+            {...register('servings', { valueAsNumber: true })}
+          />
+        </Grid>
 
-          <Grid size={{ xs: 2 }}>
-            <IconButton onClick={() => removeStep(index)}>
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
-        </>
-      ))}
-      <Grid size={{ xs: 12 }}>
-        <Button startIcon={<AddIcon />} onClick={addStep}>
-          Add step
-        </Button>
+        {/* Ingredients */}
+        <Grid size={{ xs: 12 }}>
+          <Typography variant='h6'>Ingredients</Typography>
+        </Grid>
+        {ingredientsFields.map((field, index) => (
+          <React.Fragment key={field.id}>
+            <Grid size={{ xs: 12 }}>
+              <Controller
+                control={control}
+                name={`ingredients.${index}.ingredient.id`}
+                defaultValue={field.ingredient.id}
+                render={({ field: controllerField }) => (
+                  <Selector
+                    name={`ingredients.${index}.ingredient.id`}
+                    options={ingredientOptions}
+                    onChange={controllerField.onChange}
+                  />
+                )}
+              />
+              <TextField
+                fullWidth
+                label='Amount (grams)'
+                type='number'
+                {...register(`ingredients.${index}.amount`, {
+                  valueAsNumber: true
+                })}
+              />
+              <TextField
+                fullWidth
+                label='Unit'
+                {...register(`ingredients.${index}.unit`)}
+              />
+              <TextField
+                fullWidth
+                label='Alt amount'
+                type='number'
+                {...register(`ingredients.${index}.alt_amount`, {
+                  valueAsNumber: true
+                })}
+              />
+            </Grid>
+            <Grid size={{ xs: 2 }}>
+              <IconButton onClick={() => removeIngredient(index)}>
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
+          </React.Fragment>
+        ))}
+        <Grid size={{ xs: 12 }}>
+          <Button
+            startIcon={<AddIcon />}
+            onClick={() => appendIngredient(defaultIngredient)}
+          >
+            Add Ingredient
+          </Button>
+        </Grid>
+
+        {/* Process */}
+        <Grid size={{ xs: 12 }}>
+          <Typography variant='h6'>Cooking process</Typography>
+        </Grid>
+        {processFields.map((field, index) => (
+          <Box
+            key={field.id}
+            sx={{ border: '1px solid black', p: 2, mb: 2 }}
+            display='flex'
+            flexDirection='column'
+            gap={2}
+          >
+            <Box display='flex'>
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  label={`Step ${index + 1}`}
+                  {...register(`process.${index}.en`)}
+                  multiline
+                />
+              </Grid>
+              <Grid size={{ xs: 2 }}>
+                <IconButton onClick={() => removeProcess(index)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+            </Box>
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                fullWidth
+                label={`Vaihe ${index + 1}`}
+                {...register(`process.${index}.fi`)}
+                multiline
+              />
+            </Grid>
+          </Box>
+        ))}
+        <Grid size={{ xs: 12 }}>
+          <Button
+            startIcon={<AddIcon />}
+            onClick={() => appendProcess({ en: '' })}
+          >
+            Add Step
+          </Button>
+        </Grid>
+
+        {/* Submit */}
+        <Grid size={{ xs: 12 }}>
+          <Button fullWidth variant='contained' type='submit'>
+            Save Recipe
+          </Button>
+        </Grid>
       </Grid>
-      {/* Submit */}
-      <Grid size={{ xs: 12 }}>
-        <Button fullWidth variant='contained' onClick={handleSubmit}>
-          Save recipe
-        </Button>
-      </Grid>
-    </Grid>
+    </Form>
   )
 }
 

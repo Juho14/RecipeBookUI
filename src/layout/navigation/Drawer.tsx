@@ -7,6 +7,7 @@ import DrawerSearch from './DrawerSearch'
 import RecipeList from './RecipeList'
 import GlobalDialog from '../dialog/GlobalDialog'
 import RecipeSelector from '../../components/recipies/RecipeSelector'
+import LangSelector from './LangSelector'
 
 const DrawerNav = () => {
   const [open, setOpen] = useState(false)
@@ -73,6 +74,7 @@ const DrawerNav = () => {
           recipes={searchTerm ? filteredRecipes : (PAGES as any)}
           onNavigate={handleNavigate}
         />
+        <LangSelector />
       </Drawer>
       <GlobalDialog
         title='Select Recipe'
