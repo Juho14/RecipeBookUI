@@ -1,5 +1,5 @@
 import type { Recipe } from '../../../types/Recipe/Recipe'
-import { INGREDIENTS } from '../../Ingredients'
+import { INGREDIENTS } from '../Ingredients/Ingredients'
 
 export const PESTO_PASTA: Recipe = {
   name: 'Pesto Pasta',

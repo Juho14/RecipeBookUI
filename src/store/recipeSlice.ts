@@ -20,8 +20,12 @@ export const recipeSlice = createSlice({
         clearActiveRecipe: (state) => {
             state.activeRecipe = null;
         },
+        // Actually dispatch this action to the backend
+        addRecipe: (state, action: PayloadAction<Recipe>) => {
+              console.log(action.payload)
+            },
     },
 });
 
-export const { setActiveRecipe, clearActiveRecipe } = recipeSlice.actions;
+export const { setActiveRecipe, clearActiveRecipe, addRecipe } = recipeSlice.actions;
 export default recipeSlice.reducer;

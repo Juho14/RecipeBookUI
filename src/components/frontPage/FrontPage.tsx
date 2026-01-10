@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material'
 
 const FrontPage = () => {
+  
   return (
     <Grid container spacing={2} justifyContent={'center'} textAlign={'center'}>
       <Grid size={{ xs: 12 }}>

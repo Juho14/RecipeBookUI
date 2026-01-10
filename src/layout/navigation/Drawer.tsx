@@ -20,7 +20,7 @@ const DrawerNav = () => {
 
   const allRecipePages = useMemo(() => {
     return PAGES.flatMap((page) => {
-      if ('children' in page && page.isRecipe) {
+      if ('children' in page && page.isParent) {
         return page.children.map((child) => ({
           ...child,
           parentLabel: page.label,

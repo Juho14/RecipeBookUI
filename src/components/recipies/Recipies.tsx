@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import CookingProcess from './CookingProcess'
 import Header from './Header'
 import Ingredients from './Ingredients'
@@ -13,7 +13,6 @@ import { RECIPE_LIST } from '../../constants/Data/Recipies/RecipeList'
 
 const Recipes = () => {
   const [showRecipeDialog, setShowRecipeDialog] = useState(false)
-  const handleOpen = () => setShowRecipeDialog(true)
   const handleClose = () => setShowRecipeDialog(false)
   const dispatch = useDispatch()
   const { category, recipe: recipeSlug } = useParams<{
@@ -29,20 +28,23 @@ const Recipes = () => {
 
   return (
     <>
-      <Grid container justifyContent={'center'} textAlign={'center'}>
-        <Grid>This is the front page of the Recipes</Grid>
-        <Grid size={{ xs: 12 }}>
-          <Button variant='contained' onClick={handleOpen}>
-            List of Recipes
-          </Button>
+      <Grid
+        container
+        justifyContent={'center'}
+        textAlign={'center'}
+        rowGap={2}
+        rowSpacing={2}
+      >
+        <Grid>
+          This page renders the recipies, their processes and nutrients
         </Grid>
         <Grid size={{ xs: 12 }}>
           <Header />
         </Grid>
-        <Grid size={{ xs: 4 }}>
+        <Grid size={{ xs: 8 }}>
           <Ingredients />
         </Grid>
-        <Grid size={{ xs: 4 }}>
+        <Grid size={{ xs: 8 }}>
           <CookingProcess />
         </Grid>
         <Grid size={{ xs: 8 }}>

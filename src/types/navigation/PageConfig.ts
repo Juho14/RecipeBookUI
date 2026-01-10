@@ -2,7 +2,7 @@ export type Page =
   | {
       label: string
       path: string
-      isRecipe?: false
+      isParent?: false
     }
   | {
       label: string
@@ -10,7 +10,7 @@ export type Page =
         label: string
         path: string
       }[]
-      isRecipe: true
+      isParent: true
     }
 
 export type LeafPage = Extract<Page, { path: string }>
@@ -20,7 +20,7 @@ export const PAGES: Page[] = [
   { label: 'Home', path: '/' },
   {
     label: 'Pasta',
-    isRecipe: true,
+    isParent: true,
     children: [
       { label: 'Chorizo Pasta', path: '/recipes/pasta/chorizo' },
       { label: 'Pesto Pasta', path: '/recipes/pasta/chicken-pesto' },
@@ -28,15 +28,24 @@ export const PAGES: Page[] = [
   },
   {
     label: 'Asian',
-    isRecipe: true,
+    isParent: true,
     children: [
       { label: 'Hoisin Chicken', path: '/recipes/asian/hoisin-chicken' },
     ],
   },
   {
     label: 'Fish',
-    isRecipe: true,
+    isParent: true,
     children: [{ label: 'Oven Salmon', path: '/recipes/fish/salmon' }],
   },
+  {
+    label: 'Add data',
+    isParent: true,
+    children: [
+      { label: 'Add recipe', path: '/add-recipe' },
+      { label: 'Add ingredient', path: '/add-ingredient' },
+    ],
+  },
+
   { label: 'About', path: '/about' },
 ]

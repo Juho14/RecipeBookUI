@@ -4,4 +4,5 @@ export type Ingredient = {
   name: string;
   nameEn?: string;
   macros: Macros;
+  type: number
 };

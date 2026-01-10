@@ -1,5 +1,5 @@
 import type { Recipe } from '../../../types/Recipe/Recipe'
-import { INGREDIENTS } from '../../Ingredients'
+import { INGREDIENTS } from '../Ingredients/Ingredients'
 
 export const HOISIN_CHICKEN: Recipe = {
   name: 'Hoisin Chicken',
