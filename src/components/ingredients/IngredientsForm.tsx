@@ -1,181 +1,90 @@
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { TextField, Button, Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
+import { Form, useForm } from '../form'
+import TextInput from '../form/inputs/TextInput'
+import Selector from '../form/inputs/Selector'
 import type { Ingredient } from '../../types/ingredients/Ingredient'
 import { addIngredient } from '../../store/ingredientsSlice'
-import Selector from '../form/inputs/Selector'
 import { INGREDIENT_TYPE_OPTIONS } from '../../constants/Data/Ingredients/IngredientTypeOptions'
+import { type DefaultValues } from 'react-hook-form'
+
+const defaultIngredient: Ingredient = {
+  id: 0,
+  name: '',
+  nameFi: '',
+  type: 1,
+  macros: {
+    kcal: 0,
+    fats: { total: 0, saturated: 0 },
+    carbs: { total: 0, sugars: 0 },
+    protein: 0,
+    salt: 0
+  }
+}
+
+const defaultValues: DefaultValues<Ingredient> = defaultIngredient
 
 const IngredientsForm = () => {
   const dispatch = useDispatch()
 
-  const [form, setForm] = useState<Ingredient>({
-    id: 0,
-    name: '',
-    nameFi: '',
-    type: 1,
-    macros: {
-      kcal: 0,
-      fats: { total: 0, saturated: 0 },
-      carbs: { total: 0, sugars: 0 },
-      protein: 0,
-      salt: 0
-    }
+  const onSubmit = (data: Ingredient) => {
+    console.log(data)
+    dispatch(addIngredient(data))
+  }
+
+  const form = useForm({
+    defaultValues,
+    onSubmit
   })
 
-  const handleChange =
-    (path: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = Number.isNaN(Number(e.target.value))
-        ? e.target.value
-        : Number(e.target.value)
-
-      setForm((prev) => {
-        const updated = structuredClone(prev)
-        const keys = path.split('.')
-        let obj: any = updated
-
-        keys.slice(0, -1).forEach((k) => (obj = obj[k]))
-        obj[keys.at(-1)!] = value
-
-        return updated
-      })
-    }
-
-  const handleChangeType = (value: number) => {
-    setForm((prev) => ({
-      ...prev,
-      type: value
-    }))
-  }
-
-  const handleSubmit = () => {
-    dispatch(addIngredient(form))
-  }
-
   return (
-    <>
-      <h3 style={{ textAlign: 'center' }}>Add ingredients</h3>
-      <Grid
-        container
-        justifyContent={'center'}
-        textAlign={'center'}
-        justifySelf={'center'}
-        rowGap={2}
-        rowSpacing={2}
-        spacing={2}
-        maxWidth={500}
-      >
-        {/* Names */}
+    <Form form={form}>
+      <Grid container spacing={2} maxWidth={500} justifySelf='center'>
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Name'
-            value={form.name}
-            onChange={handleChange('name')}
-          />
+          <TextInput name='name' label='Name' />
         </Grid>
-
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='English name'
-            value={form.nameFi}
-            onChange={handleChange('nameFi')}
-          />
+          <TextInput name='nameFi' label='English name' />
         </Grid>
-
-        {/* Type */}
         <Grid size={{ xs: 6 }}>
           <Selector
-            name={'type'}
-            value={form.type}
+            name='type'
+            label='Type'
             options={INGREDIENT_TYPE_OPTIONS}
-            onChange={handleChangeType}
           />
         </Grid>
 
-        {/* kcal */}
+        {/* Macros */}
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='kcal / 100g'
-            type='number'
-            value={form.macros.kcal}
-            onChange={handleChange('macros.kcal')}
-          />
+          <TextInput name='macros.kcal' label='kcal / 100g' />
         </Grid>
-
-        {/* Fats */}
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Fat (total)'
-            type='number'
-            value={form.macros.fats.total}
-            onChange={handleChange('macros.fats.total')}
-          />
+          <TextInput name='macros.fats.total' label='Fat (total)' />
         </Grid>
-
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Fat (saturated)'
-            type='number'
-            value={form.macros.fats.saturated}
-            onChange={handleChange('macros.fats.saturated')}
-          />
+          <TextInput name='macros.fats.saturated' label='Fat (saturated)' />
         </Grid>
-
-        {/* Carbs */}
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Carbs (total)'
-            type='number'
-            value={form.macros.carbs.total}
-            onChange={handleChange('macros.carbs.total')}
-          />
+          <TextInput name='macros.carbs.total' label='Carbs (total)' />
         </Grid>
-
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Carbs (sugars)'
-            type='number'
-            value={form.macros.carbs.sugars}
-            onChange={handleChange('macros.carbs.sugars')}
-          />
+          <TextInput name='macros.carbs.sugars' label='Carbs (sugars)' />
         </Grid>
-
-        {/* Protein & Salt */}
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Protein'
-            type='number'
-            value={form.macros.protein}
-            onChange={handleChange('macros.protein')}
-          />
+          <TextInput name='macros.protein' label='Protein' />
         </Grid>
-
         <Grid size={{ xs: 6 }}>
-          <TextField
-            fullWidth
-            label='Salt'
-            type='number'
-            value={form.macros.salt}
-            onChange={handleChange('macros.salt')}
-          />
+          <TextInput name='macros.salt' label='Salt' />
         </Grid>
 
         {/* Submit */}
         <Grid size={{ xs: 6 }}>
-          <Button fullWidth variant='contained' onClick={handleSubmit}>
+          <Button fullWidth variant='contained' name='submit'>
             Save Ingredient
           </Button>
         </Grid>
       </Grid>
-    </>
+    </Form>
   )
 }
 

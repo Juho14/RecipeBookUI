@@ -16,12 +16,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
 
 interface SelectorProps<T extends string | number> {
   name: string
+  label: string
   defaultValue?: T
   options: SelectOption<T>[]
   fullWidth?: boolean
   classes?: SelectorClasses
   sx?: SxProps<Theme>
-  onChange?: (value: T) => void // ✅ custom callback
+  onChange?: (value: T) => void
 }
 
 const Selector = <T extends string | number>({

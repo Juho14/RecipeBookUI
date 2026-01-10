@@ -18,7 +18,7 @@ const useStyles = makeStyles()(() => ({
     width: '100%'
   },
   errorLabel: {
-    // color: '#d32f2f'
+    color: '#d32f2f'
   },
   disabledLabel: {
     color: 'rgba(0, 0, 0, 0.26)'
@@ -48,7 +48,7 @@ const useStyles = makeStyles()(() => ({
     fontSize: 20
   },
   helperText: {
-    // color: '#d32f2f'
+    color: '#d32f2f'
   }
 }))
 

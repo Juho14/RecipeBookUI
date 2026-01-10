@@ -7,3 +7,5 @@ export type Ingredient = {
   macros: Macros
   type: number
 }
+
+export type FormIngredient = Omit<Ingredient, 'id'> & { id?: number }
