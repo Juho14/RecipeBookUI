@@ -1,14 +1,18 @@
 import { Button } from '@mui/material'
 import { setLang } from '../../store/langSlice'
 import { useDispatch } from 'react-redux'
-import { LANG } from '../../types/ui/Lang'
+import { LANG, type Lang } from '../../types/ui/Lang'
 
 const LangSelector = () => {
   const dispatch = useDispatch()
+
+  const updateLanguage = (lang: Lang) => {
+    dispatch(setLang(lang))
+  }
   return (
     <>
-      <Button onClick={() => dispatch(setLang(LANG.FI))}>FI</Button>
-      <Button onClick={() => dispatch(setLang(LANG.EN))}>EN</Button>
+      <Button onClick={() => updateLanguage(LANG.FI)}>FI</Button>
+      <Button onClick={() => updateLanguage(LANG.EN)}>EN</Button>
     </>
   )
 }

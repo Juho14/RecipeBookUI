@@ -94,11 +94,7 @@ export const Label = ({
           {label} {required ? '*' : ''}
         </span>
         {tooltipTitle && (
-          <Tooltip
-            title={tooltipTitle}
-            placement='top'
-            arrow
-          >
+          <Tooltip title={tooltipTitle} placement='top' arrow>
             <InfoOutlined className={classes.infoIcon} />
           </Tooltip>
         )}

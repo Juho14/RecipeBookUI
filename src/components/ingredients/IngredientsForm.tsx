@@ -31,9 +31,6 @@ const IngredientsForm = () => {
   const dispatch = useDispatch()
 
   const onSubmit = (data: Ingredient) => {
-    console.log(data)
-    const isValid = validateMacros(data.macros)
-    console.log('Macros are valid:', isValid)
     dispatch(addIngredient(data))
   }
 

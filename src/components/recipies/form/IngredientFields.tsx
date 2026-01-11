@@ -36,22 +36,22 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   return (
     <>
       <Grid size={{ xs: 12 }}>
-        <Typography variant='h6'>Ingredients</Typography>
+        <Typography variant='h6'>{t('recipies.ingredients')}</Typography>
       </Grid>
       {ingredientsFields.map((field, index) => (
         <React.Fragment key={field.id}>
           <Grid size={{ xs: 12 }}>
             <Selector
               name={`ingredients.${index}.ingredient.id`}
-              label='Ingredient'
+              label={t('recipies.ingredient')}
               options={ingredientOptions}
             />
-            <TextInput name='number' label='Amount (grams)' />
+            <TextInput name='number' label={t('recipies.amount')} />
             <TextInput
               name='altAmount'
-              label='Real world measurement (e.g., 1 tbsp)'
+              label={t('recipies.realWorldMeasurement')}
             />
-            <TextInput name='cookingUnit' label='Unit' />
+            <TextInput name='cookingUnit' label={t('recipies.cookingUnit')} />
           </Grid>
           <Grid size={{ xs: 2 }}>
             <IconButton onClick={() => removeIngredient(index)}>

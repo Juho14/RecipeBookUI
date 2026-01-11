@@ -6,7 +6,7 @@ interface LangState {
 }
 
 const initialState: LangState = {
-  current: LANG.EN,
+  current: LANG.EN
 }
 
 export const langSlice = createSlice({
@@ -15,8 +15,8 @@ export const langSlice = createSlice({
   reducers: {
     setLang(state, action: PayloadAction<Lang>) {
       state.current = action.payload
-    },
-  },
+    }
+  }
 })
 
 export const { setLang } = langSlice.actions

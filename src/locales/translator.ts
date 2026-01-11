@@ -8,13 +8,13 @@ i18n
   .init({
     resources: {
       en: { translation: en },
-      fi: { translation: fi },
+      fi: { translation: fi }
     },
     lng: 'en', // default language
     fallbackLng: 'en', // fallback if key is missing in the current language
     interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
+      escapeValue: false // react already safes from xss
+    }
   })
 
 export default i18n

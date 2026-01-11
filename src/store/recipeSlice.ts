@@ -6,7 +6,7 @@ interface RecipeState {
 }
 
 const initialState: RecipeState = {
-  activeRecipe: null,
+  activeRecipe: null
 }
 
 export const recipeSlice = createSlice({
@@ -20,10 +20,8 @@ export const recipeSlice = createSlice({
       state.activeRecipe = null
     },
     // Actually dispatch this action to the backend
-    addRecipe: (state, action: PayloadAction<Recipe>) => {
-      console.log(action.payload)
-    },
-  },
+    addRecipe: (state, action: PayloadAction<Recipe>) => {}
+  }
 })
 
 export const { setActiveRecipe, clearActiveRecipe, addRecipe } =
