@@ -23,29 +23,29 @@ export const PAGES: Page[] = [
     isParent: true,
     children: [
       { label: 'Chorizo Pasta', path: '/recipes/pasta/chorizo' },
-      { label: 'Pesto Pasta', path: '/recipes/pasta/chicken-pesto' },
-    ],
+      { label: 'Pesto Pasta', path: '/recipes/pasta/chicken-pesto' }
+    ]
   },
   {
     label: 'Asian',
     isParent: true,
     children: [
-      { label: 'Hoisin Chicken', path: '/recipes/asian/hoisin-chicken' },
-    ],
+      { label: 'Hoisin Chicken', path: '/recipes/asian/hoisin-chicken' }
+    ]
   },
   {
     label: 'Fish',
     isParent: true,
-    children: [{ label: 'Oven Salmon', path: '/recipes/fish/salmon' }],
+    children: [{ label: 'Oven Salmon', path: '/recipes/fish/salmon' }]
   },
   {
     label: 'Add data',
     isParent: true,
     children: [
       { label: 'Add recipe', path: '/add-recipe' },
-      { label: 'Add ingredient', path: '/add-ingredient' },
-    ],
+      { label: 'Add ingredient', path: '/add-ingredient' }
+    ]
   },
 
-  { label: 'About', path: '/about' },
+  { label: 'About', path: '/about' }
 ]

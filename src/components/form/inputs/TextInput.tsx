@@ -5,6 +5,7 @@ import { makeStyles } from 'tss-react/mui'
 import { useTranslation } from 'react-i18next'
 import { useController, useFormContext } from 'react-hook-form'
 import { CommonHelperText } from './HelperText'
+import { Label } from './Label'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   root: {
@@ -24,6 +25,8 @@ interface TextInputProps<T extends string | number> {
   name: string
   label: string
   defaultValue?: T
+  disabled?: boolean
+  required?: boolean | string // true = default, string = custom message
   onChange?: (value: T) => void
   fullWidth?: boolean
   classes?: SelectorClasses
@@ -35,12 +38,13 @@ const TextInput = <T extends string | number>({
   name,
   label,
   defaultValue,
+  disabled = false,
+  required = false,
   onChange,
   fullWidth = true,
   multiline = false
 }: TextInputProps<T>) => {
   const { classes, cx } = useStyles()
-  const { t } = useTranslation()
   const { control } = useFormContext()
 
   const {
@@ -49,7 +53,10 @@ const TextInput = <T extends string | number>({
   } = useController({
     name,
     control,
-    defaultValue
+    defaultValue,
+    rules: {
+      required
+    }
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,14 +66,14 @@ const TextInput = <T extends string | number>({
 
   return (
     <>
+      <Label label={label} required={!!required} error={error} />
       <TextField
         {...field}
-        label={t(label)}
         fullWidth={fullWidth}
+        disabled={disabled}
         onChange={handleChange}
         className={cx(classes.root, classes?.root)}
         multiline={multiline}
-        error={invalid}
       />
       <CommonHelperText invalid={invalid} error={error} />
     </>

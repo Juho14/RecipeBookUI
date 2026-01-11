@@ -19,7 +19,7 @@ export const MACRO_SCHEMA: MacroSchema[] = [
   {
     type: 'number',
     key: 'kcal',
-    label: 'Energy (kcal)',
+    label: 'Energy (kcal)'
   },
   {
     type: 'object',
@@ -27,8 +27,8 @@ export const MACRO_SCHEMA: MacroSchema[] = [
     label: 'Fat',
     children: [
       { key: 'total', label: 'Total' },
-      { key: 'saturated', label: 'Saturated' },
-    ],
+      { key: 'saturated', label: 'Saturated' }
+    ]
   },
   {
     type: 'object',
@@ -36,17 +36,17 @@ export const MACRO_SCHEMA: MacroSchema[] = [
     label: 'Carbohydrates',
     children: [
       { key: 'total', label: 'Total' },
-      { key: 'sugars', label: 'Sugars' },
-    ],
+      { key: 'sugars', label: 'Sugars' }
+    ]
   },
   {
     type: 'number',
     key: 'protein',
-    label: 'Protein',
+    label: 'Protein'
   },
   {
     type: 'number',
     key: 'salt',
-    label: 'Salt',
-  },
+    label: 'Salt'
+  }
 ]

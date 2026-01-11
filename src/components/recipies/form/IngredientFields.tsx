@@ -8,6 +8,7 @@ import { INGREDIENTS } from '../../../constants/Data/Ingredients/Ingredients'
 import type { SelectOption } from '../../../types/form/SelectOption'
 import AddIcon from '@mui/icons-material/Add'
 import type { RecipeIngredient } from '../../../types/Recipe/Recipe'
+import { useTranslation } from 'react-i18next'
 
 interface IngredientFieldsProps {
   defaultIngredient: RecipeIngredient
@@ -15,6 +16,7 @@ interface IngredientFieldsProps {
 
 const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   const { control } = useFormContext()
+  const { t } = useTranslation()
 
   const {
     fields: ingredientsFields,
@@ -45,11 +47,11 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
               options={ingredientOptions}
             />
             <TextInput name='number' label='Amount (grams)' />
-            <TextInput name='unit' label='Unit' />
             <TextInput
               name='altAmount'
               label='Real world measurement (e.g., 1 tbsp)'
             />
+            <TextInput name='cookingUnit' label='Unit' />
           </Grid>
           <Grid size={{ xs: 2 }}>
             <IconButton onClick={() => removeIngredient(index)}>

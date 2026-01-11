@@ -8,18 +8,18 @@ export const PESTO_PASTA: Recipe = {
   servings: 2,
   time: '25 mins',
   ingredients: [
-    { ingredient: INGREDIENTS.TOMATO, amount: 200, unit: 'g' },
+    { ingredient: INGREDIENTS.TOMATO, amount: 200, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.OLIVE_OIL,
       amount: 20,
-      unit: 'tbsp',
+      cookingUnit: 'tbsp',
       alt_amount: 1.5,
     },
-    { ingredient: INGREDIENTS.SUGAR, amount: 5, unit: 'g' },
+    { ingredient: INGREDIENTS.SUGAR, amount: 5, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
       amount: 180,
-      unit: 'dl',
+      cookingUnit: 'dl',
       alt_amount: 2,
     },
   ],

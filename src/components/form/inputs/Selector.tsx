@@ -7,6 +7,7 @@ import { makeStyles } from 'tss-react/mui'
 import { useTranslation } from 'react-i18next'
 import { useController, useFormContext } from 'react-hook-form'
 import { CommonHelperText } from './HelperText'
+import { Label } from './Label'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   root: { minHeight: 40, borderRadius: 8 },
@@ -18,6 +19,8 @@ interface SelectorProps<T extends string | number> {
   name: string
   label: string
   defaultValue?: T
+  disabled?: boolean
+  required?: boolean | string // true = default, string = custom message
   options: SelectOption<T>[]
   fullWidth?: boolean
   classes?: SelectorClasses
@@ -27,7 +30,10 @@ interface SelectorProps<T extends string | number> {
 
 const Selector = <T extends string | number>({
   name,
+  label,
   defaultValue,
+  disabled = false,
+  required = false,
   options,
   fullWidth = true,
   onChange
@@ -39,7 +45,14 @@ const Selector = <T extends string | number>({
   const {
     field,
     fieldState: { invalid, error }
-  } = useController({ name, control, defaultValue })
+  } = useController({
+    name,
+    control,
+    defaultValue,
+    rules: {
+      required
+    }
+  })
 
   const handleChange = (e: SelectChangeEvent<unknown>) => {
     const value = e.target.value as T
@@ -52,10 +65,12 @@ const Selector = <T extends string | number>({
 
   return (
     <>
+      <Label label={label} required={!!required} error={error} />
       <Select<unknown>
         {...field}
         fullWidth={fullWidth}
         value={field.value ?? ''}
+        disabled={disabled}
         onChange={handleChange}
         renderValue={() => selectedLabel}
         className={cx(classes.root, classes?.root)}

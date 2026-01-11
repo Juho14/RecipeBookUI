@@ -6,6 +6,7 @@ import {
   type UseFormReturn,
   type SubmitHandler
 } from 'react-hook-form'
+import { resolverWrapper } from './ResolverWrapper'
 
 interface ExtendedUseFormOptions<
   TFieldValues extends FieldValues = FieldValues,
@@ -18,7 +19,10 @@ interface ExtendedUseFormOptions<
   onSubmit: (data: TFieldValues) => void
 }
 
-export interface ExtendedUseFormReturn<TFieldValues extends FieldValues, TContext = any> extends UseFormReturn<TFieldValues, TContext> {
+export interface ExtendedUseFormReturn<
+  TFieldValues extends FieldValues,
+  TContext = any
+> extends UseFormReturn<TFieldValues, TContext> {
   onSubmit: SubmitHandler<TFieldValues>
 }
 
@@ -28,11 +32,19 @@ const useForm = <
 >(
   options: ExtendedUseFormOptions<TFieldValues, TContext>
 ): ExtendedUseFormReturn<TFieldValues, TContext> => {
-  const { defaultValues, resolver, mode = 'onBlur', shouldUnregister = false, onSubmit: userOnSubmit } = options
+  const {
+    defaultValues,
+    resolver,
+    mode = 'onBlur',
+    shouldUnregister = false,
+    onSubmit: userOnSubmit
+  } = options
+
+  const wrappedResolver = resolver ? resolverWrapper(resolver) : undefined
 
   const form = useHookForm<TFieldValues, TContext>({
     defaultValues,
-    resolver,
+    resolver: wrappedResolver,
     mode,
     shouldUnregister
   })

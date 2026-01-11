@@ -4,9 +4,9 @@ export type RecipeIngredient = {
   ingredient: Ingredient
   // represents grams, used for calculation
   amount: number
-  // Displays the unit on the page. Use this to match alt amount
+  // Displays the cookingUnit on the page. Use this to match alt amount
   // if grams isnt applicable.
-  unit: string
+  cookingUnit: string
   // Represents real world measurements ex. tablespoon
   alt_amount?: number
 }

@@ -7,12 +7,15 @@ import type { Ingredient } from '../../types/ingredients/Ingredient'
 import { addIngredient } from '../../store/ingredientsSlice'
 import { INGREDIENT_TYPE_OPTIONS } from '../../constants/Data/Ingredients/IngredientTypeOptions'
 import { type DefaultValues } from 'react-hook-form'
+import { validateMacros } from '../../utils/ingredientUtils/ValidateMacros'
+import { ingredientFormValidator } from './ingredientValidator'
+import { INGREDIENT_TYPE } from '../../types/ingredients/IngredientTypes'
 
 const defaultIngredient: Ingredient = {
   id: 0,
   name: '',
   nameFi: '',
-  type: 1,
+  type: INGREDIENT_TYPE.VEGETABLE,
   macros: {
     kcal: 0,
     fats: { total: 0, saturated: 0 },
@@ -29,22 +32,25 @@ const IngredientsForm = () => {
 
   const onSubmit = (data: Ingredient) => {
     console.log(data)
+    const isValid = validateMacros(data.macros)
+    console.log('Macros are valid:', isValid)
     dispatch(addIngredient(data))
   }
 
   const form = useForm({
     defaultValues,
-    onSubmit
+    onSubmit,
+    resolver: ingredientFormValidator
   })
 
   return (
     <Form form={form}>
       <Grid container spacing={2} maxWidth={500} justifySelf='center'>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='name' label='Name' />
+          <TextInput name='name' label='Name' required />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='nameFi' label='English name' />
+          <TextInput name='nameFi' label='Finnish name' />
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Selector
@@ -54,32 +60,38 @@ const IngredientsForm = () => {
           />
         </Grid>
 
-        {/* Macros */}
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.kcal' label='kcal / 100g' />
+          <TextInput name='macros.kcal' label='kcal / 100g' required />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.fats.total' label='Fat (total)' />
+          <TextInput name='macros.fats.total' label='Fat (total)' required />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.fats.saturated' label='Fat (saturated)' />
+          <TextInput
+            name='macros.fats.saturated'
+            label='Fat (saturated)'
+            required
+          />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.carbs.total' label='Carbs (total)' />
+          <TextInput name='macros.carbs.total' label='Carbs (total)' required />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.carbs.sugars' label='Carbs (sugars)' />
+          <TextInput
+            name='macros.carbs.sugars'
+            label='Carbs (sugars)'
+            required
+          />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.protein' label='Protein' />
+          <TextInput name='macros.protein' label='Protein' required />
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.salt' label='Salt' />
+          <TextInput name='macros.salt' label='Salt' required />
         </Grid>
 
-        {/* Submit */}
         <Grid size={{ xs: 6 }}>
-          <Button fullWidth variant='contained' name='submit'>
+          <Button fullWidth variant='contained' type='submit'>
             Save Ingredient
           </Button>
         </Grid>

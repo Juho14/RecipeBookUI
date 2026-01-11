@@ -14,7 +14,7 @@ import IngredientFields from './IngredientFields'
 const defaultIngredient: RecipeIngredient = {
   ingredient: {} as any,
   amount: 0,
-  unit: 'g'
+  cookingUnit: 'g'
 }
 
 const defaultValues: DefaultValues<Recipe> = {
