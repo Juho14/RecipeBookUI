@@ -38,6 +38,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
       protein: 0,
       salt: 0,
     },
+    density: 0.91
   },
   SUGAR: {
     id: 4,

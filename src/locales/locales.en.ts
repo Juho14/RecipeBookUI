@@ -12,7 +12,7 @@ const en = {
     duration: 'Duration',
     servings: 'Servings',
     amount: 'Amount (grams)',
-    cookingUnit: 'Unit',
+    cookingUnit: 'CookingUnit',
     displayAmount: 'Alternative amount',
     realWorldMeasurement: 'Real world measurement (e.g., 1 tbsp)'
   },

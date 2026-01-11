@@ -1,3 +1,4 @@
+import type { CookingUnit } from '../ingredients/CookingUnit'
 import type { Ingredient } from '../ingredients/Ingredient'
 
 export type RecipeIngredient = {
@@ -6,7 +7,7 @@ export type RecipeIngredient = {
   amount: number
   // Displays the cookingUnit on the page. Use this to match alt amount
   // if grams isnt applicable.
-  cookingUnit: string
+  cookingUnit: CookingUnit
   // Represents real world measurements ex. tablespoon
   alt_amount?: number
 }

@@ -5,7 +5,10 @@ export type Ingredient = {
   name: string
   nameFi?: string
   macros: Macros
+  density?: number
   type: number
 }
 
-export type FormIngredient = Omit<Ingredient, 'id'> & { id?: number }
+export type FormIngredient = Omit<Ingredient, 'id'> & {
+  id?: number
+}

@@ -56,6 +56,7 @@ const Selector = <T extends string | number>({
 
   const handleChange = (e: SelectChangeEvent<unknown>) => {
     const value = e.target.value as T
+    console.log(value)
     field.onChange(value)
     if (onChange) onChange(value)
   }

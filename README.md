@@ -73,3 +73,10 @@ export default defineConfig([
   },
 ])
 ```
+Nutrition is always stored per 100 g
+
+All calculations go through grams
+
+Volume units require density (g/ml)
+
+If density is missing, 1 g/ml is assumed

@@ -7,7 +7,6 @@ import type { Ingredient } from '../../types/ingredients/Ingredient'
 import { addIngredient } from '../../store/ingredientsSlice'
 import { INGREDIENT_TYPE_OPTIONS } from '../../constants/Data/Ingredients/IngredientTypeOptions'
 import { type DefaultValues } from 'react-hook-form'
-import { validateMacros } from '../../utils/ingredientUtils/ValidateMacros'
 import { ingredientFormValidator } from './ingredientValidator'
 import { INGREDIENT_TYPE } from '../../types/ingredients/IngredientTypes'
 

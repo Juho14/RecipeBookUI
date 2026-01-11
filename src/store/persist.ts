@@ -5,7 +5,7 @@ import recipeReducer from './recipeSlice'
 export const recipePersistConfig = {
   key: 'recipe',
   storage,
-  whitelist: ['lastSelectedId']
+  whitelist: ['activeRecipe']
 }
 
 export const persistedRecipeReducer = persistReducer(
