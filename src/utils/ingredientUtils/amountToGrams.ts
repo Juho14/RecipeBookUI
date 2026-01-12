@@ -3,17 +3,17 @@ import { getIngredientById } from "./getIngredientById"
 import { unitToMl } from "./unitToMl"
 
 export function amountToGrams(recipeIngredient: RecipeIngredient) {
-  const { amount, alt_amount, cookingUnit, ingredient } = recipeIngredient
+  const { grams, amount, cookingUnit, ingredient } = recipeIngredient
   console.log(recipeIngredient)
 
   const fullIngredient = getIngredientById(ingredient.id)
 
-  if (cookingUnit === 'g') return amount
+  if (cookingUnit === 'g') return grams
 
-  if (alt_amount === undefined || alt_amount === null)
-    throw new Error('Alt amount required for non-gram units')
+  if (amount === undefined || amount === null)
+    throw new Error('Alt grams required for non-gram units')
 
-  const ml = unitToMl(Number(alt_amount), cookingUnit)
+  const ml = unitToMl(Number(amount), cookingUnit)
 
   const density = fullIngredient?.density
   if (!density) {

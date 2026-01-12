@@ -11,9 +11,9 @@ const en = {
     name: 'Name',
     duration: 'Duration',
     servings: 'Servings',
-    amount: 'Amount (grams)',
+    grams: 'Amount (grams)',
     cookingUnit: 'CookingUnit',
-    displayAmount: 'Alternative amount',
+    displayAmount: 'Alternative grams',
     realWorldMeasurement: 'Real world measurement (e.g., 1 tbsp)'
   },
   ingredients: {

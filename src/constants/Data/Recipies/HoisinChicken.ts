@@ -8,19 +8,19 @@ export const HOISIN_CHICKEN: Recipe = {
   servings: 3,
   time: '30 mins',
   ingredients: [
-    { ingredient: INGREDIENTS.CHICKEN_STRIPS, amount: 600, cookingUnit: 'g' },
+    { ingredient: INGREDIENTS.CHICKEN_STRIPS, grams: 600, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.OLIVE_OIL,
-      amount: 15,
+      grams: 15,
       cookingUnit: 'tbsp',
-      alt_amount: 1,
+      amount: 1,
     },
-    { ingredient: INGREDIENTS.SUGAR, amount: 10, cookingUnit: 'g' },
+    { ingredient: INGREDIENTS.SUGAR, grams: 10, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
-      amount: 240,
+      grams: 240,
       cookingUnit: 'dl',
-      alt_amount: 2.5,
+      amount: 2.5,
     },
   ],
   process: [

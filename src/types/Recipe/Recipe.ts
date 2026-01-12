@@ -4,12 +4,12 @@ import type { Ingredient } from '../ingredients/Ingredient'
 export type RecipeIngredient = {
   ingredient: Ingredient
   // represents grams, used for calculation
-  amount: number
-  // Displays the cookingUnit on the page. Use this to match alt amount
+  grams: number
+  // Displays the cookingUnit on the page. Use this to match alt grams
   // if grams isnt applicable.
   cookingUnit: CookingUnit
   // Represents real world measurements ex. tablespoon
-  alt_amount?: number
+  amount?: number
 }
 
 export type RecipeProcessStep = {

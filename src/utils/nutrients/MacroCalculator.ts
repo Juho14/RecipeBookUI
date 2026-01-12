@@ -17,8 +17,8 @@ export const calculateMacros = (recipe: Recipe) => {
   }
 
   // 1️⃣ Calculate total macros
-  for (const { ingredient, amount } of recipe.ingredients) {
-    const factor = amount / 100
+  for (const { ingredient, grams } of recipe.ingredients) {
+    const factor = grams / 100
     // const factor = 1
 
     // Object macros (energy, fats, carbs)

@@ -5,19 +5,19 @@ const TSP_TO_ML = 5
 const DL_TO_ML = 100
 const L_TO_ML = 1000
 
-export function unitToMl(amount: number, cookingUnit: CookingUnit): number {
+export function unitToMl(grams: number, cookingUnit: CookingUnit): number {
     console.log(cookingUnit)
   switch (cookingUnit) {
     case 'ml':
-      return amount
+      return grams
     case 'tbsp':
-      return amount * TBSP_TO_ML
+      return grams * TBSP_TO_ML
     case 'tsp':
-      return amount * TSP_TO_ML
+      return grams * TSP_TO_ML
     case 'dl':
-      return amount * DL_TO_ML
+      return grams * DL_TO_ML
     case 'l':
-      return amount * L_TO_ML
+      return grams * L_TO_ML
     default:
       throw new Error('Not a volume unit')
   }

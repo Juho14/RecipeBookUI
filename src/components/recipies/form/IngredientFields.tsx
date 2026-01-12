@@ -49,7 +49,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   )
 
   const resetCookingUnit = (index: number) => {
-    setValue(`ingredients.${index}.alt_amount`, '')
+    setValue(`ingredients.${index}.amount`, '')
   }
 
   const handleIngredientChange = (index: number, value: number) => {
@@ -66,7 +66,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
     const ingredient = getValues(`ingredients.${index}`)
 
     const grams = amountToGrams(ingredient)
-    setValue(`ingredients.${index}.amount`, grams)
+    setValue(`ingredients.${index}.grams`, grams)
   }
 
   return (
@@ -92,13 +92,13 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
             )}
 
             <TextInput
-              name={`ingredients.${index}.alt_amount`}
+              name={`ingredients.${index}.amount`}
               label={t('recipies.realWorldMeasurement')}
               onChange={() => handleMeasureChange(index)}
             />
             <TextInput
-              name={`ingredients.${index}.amount`}
-              label={t('recipies.amount')}
+              name={`ingredients.${index}.grams`}
+              label={t('recipies.grams')}
             />
           </Grid>
           <Grid size={{ xs: 2 }}>

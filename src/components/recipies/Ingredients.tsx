@@ -24,11 +24,11 @@ const Ingredients = () => {
       <AccordionDetails>
         <List>
           {recipe.ingredients.map(
-            ({ ingredient, amount, alt_amount, cookingUnit }) => (
+            ({ ingredient, grams, amount, cookingUnit }) => (
               <ListItem key={ingredient.name} disablePadding>
                 <ListItemText
                   primary={ingredient.name}
-                  secondary={`${alt_amount ?? amount} ${cookingUnit}`}
+                  secondary={`${amount ?? grams} ${cookingUnit}`}
                 />
               </ListItem>
             )
