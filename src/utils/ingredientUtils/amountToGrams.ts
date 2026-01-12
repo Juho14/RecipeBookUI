@@ -1,10 +1,9 @@
-import type { RecipeIngredient } from "../../types/Recipe/Recipe"
-import { getIngredientById } from "./getIngredientById"
-import { unitToMl } from "./unitToMl"
+import type { RecipeIngredient } from '../../types/Recipe/Recipe'
+import { getIngredientById } from './getIngredientById'
+import { unitToMl } from './unitToMl'
 
 export function amountToGrams(recipeIngredient: RecipeIngredient) {
   const { grams, amount, cookingUnit, ingredient } = recipeIngredient
-  console.log(recipeIngredient)
 
   const fullIngredient = getIngredientById(ingredient.id)
 

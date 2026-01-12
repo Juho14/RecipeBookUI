@@ -10,9 +10,10 @@ import { Form, useForm } from '../../form'
 import TextInput from '../../form/inputs/TextInput'
 import ProcessFields from './ProcessFields'
 import IngredientFields from './IngredientFields'
+import type { Ingredient } from '../../../types/ingredients/Ingredient'
 
 const defaultIngredient: RecipeIngredient = {
-  ingredient: {} as any,
+  ingredient: {} as Ingredient,
   grams: 0,
   cookingUnit: 'g'
 }
@@ -30,6 +31,7 @@ const defaultValues: DefaultValues<Recipe> = {
 const RecipeForm = () => {
   const dispatch = useDispatch()
   const onSubmit = (data: Recipe) => {
+    console.log(data)
     dispatch(addRecipe(data))
   }
 
