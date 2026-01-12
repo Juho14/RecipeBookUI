@@ -6,7 +6,7 @@ import Selector from '../form/inputs/Selector'
 import type { Ingredient } from '../../types/ingredients/Ingredient'
 import { addIngredient } from '../../store/ingredientsSlice'
 import { INGREDIENT_TYPE_OPTIONS } from '../../constants/Data/Ingredients/IngredientTypeOptions'
-import { type DefaultValues } from 'react-hook-form'
+import { useWatch, type DefaultValues } from 'react-hook-form'
 import { ingredientFormValidator } from './ingredientValidator'
 import { INGREDIENT_TYPE } from '../../types/ingredients/IngredientTypes'
 
@@ -20,7 +20,8 @@ const defaultIngredient: Ingredient = {
     fats: { total: 0, saturated: 0 },
     carbs: { total: 0, sugars: 0 },
     protein: 0,
-    salt: 0
+    salt: 0,
+    fiber: 0
   }
 }
 
@@ -28,7 +29,6 @@ const defaultValues: DefaultValues<Ingredient> = defaultIngredient
 
 const IngredientsForm = () => {
   const dispatch = useDispatch()
-
   const onSubmit = (data: Ingredient) => {
     dispatch(addIngredient(data))
   }
@@ -37,6 +37,13 @@ const IngredientsForm = () => {
     defaultValues,
     onSubmit,
     resolver: ingredientFormValidator
+  })
+
+  const { control } = form
+
+  const watchedType = useWatch({
+    name: 'type',
+    control
   })
 
   return (
@@ -55,36 +62,50 @@ const IngredientsForm = () => {
             options={INGREDIENT_TYPE_OPTIONS}
           />
         </Grid>
-
-        <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.kcal' label='kcal / 100g' required />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.fats.total' label='Fat (total)' required />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput
-            name='macros.fats.saturated'
-            label='Fat (saturated)'
-            required
-          />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.carbs.total' label='Carbs (total)' required />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput
-            name='macros.carbs.sugars'
-            label='Carbs (sugars)'
-            required
-          />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.protein' label='Protein' required />
-        </Grid>
-        <Grid size={{ xs: 6 }}>
-          <TextInput name='macros.salt' label='Salt' required />
-        </Grid>
+        {watchedType !== INGREDIENT_TYPE.SEASONING && (
+          <>
+            <Grid size={{ xs: 6 }}>
+              <TextInput name='macros.kcal' label='kcal / 100g' required />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput
+                name='macros.fats.total'
+                label='Fat (total)'
+                required
+              />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput
+                name='macros.fats.saturated'
+                label='Fat (saturated)'
+                required
+              />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput
+                name='macros.carbs.total'
+                label='Carbs (total)'
+                required
+              />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput
+                name='macros.carbs.sugars'
+                label='Carbs (sugars)'
+                required
+              />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput name='macros.protein' label='Protein' required />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput name='macros.salt' label='Salt' required />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <TextInput name='macros.fiber' label='Fiber' required />
+            </Grid>
+          </>
+        )}
 
         <Grid size={{ xs: 6 }}>
           <Button fullWidth variant='contained' type='submit'>

@@ -13,23 +13,29 @@ export const HOISIN_CHICKEN: Recipe = {
       ingredient: INGREDIENTS.OLIVE_OIL,
       grams: 15,
       cookingUnit: 'tbsp',
-      amount: 1,
+      amount: 1
     },
     { ingredient: INGREDIENTS.SUGAR, grams: 10, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
       grams: 240,
       cookingUnit: 'dl',
-      amount: 2.5,
+      amount: 2.5
     },
+    {
+      ingredient: INGREDIENTS.HOISIN_SAUCE,
+      grams: 104,
+      cookingUnit: 'tbsp',
+      amount: 6
+    }
   ],
   process: [
     { en: 'Preheat oven to 200°C (390°F).' },
     { en: 'Mix hoisin sauce with olive oil and sugar to make a glaze.' },
     {
-      en: 'Coat the chicken breasts in the glaze and let marinate for 10 minutes.',
+      en: 'Coat the chicken breasts in the glaze and let marinate for 10 minutes.'
     },
     { en: 'Bake chicken for 20 minutes until cooked through.' },
-    { en: 'Serve hot with steamed vegetables or rice.' },
-  ],
+    { en: 'Serve hot with steamed vegetables or rice.' }
+  ]
 }

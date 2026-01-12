@@ -1,8 +1,7 @@
-// MacroSchema.ts
 export type MacroSchema =
   | {
       type: 'number'
-      key: 'kcal' | 'protein' | 'salt'
+      key: 'kcal' | 'protein' | 'salt' | 'fiber'
       label: string
     }
   | {
@@ -48,5 +47,10 @@ export const MACRO_SCHEMA: MacroSchema[] = [
     type: 'number',
     key: 'salt',
     label: 'Salt'
+  },
+  {
+    type: 'number',
+    key: 'fiber',
+    label: 'Fiber'
   }
 ]

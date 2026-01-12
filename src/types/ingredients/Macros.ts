@@ -7,7 +7,8 @@ export type Macros = {
   carbs: Carbs
   protein: number
   salt: number
+  fiber: number
 }
 
 export const objectMacroKeys = ['fats', 'carbs'] as const
-export const numericMacroKeys = ['kcal', 'protein', 'salt'] as const
+export const numericMacroKeys = ['kcal', 'protein', 'salt', 'fiber'] as const

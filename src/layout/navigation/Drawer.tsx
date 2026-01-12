@@ -2,7 +2,7 @@ import { Button, Drawer, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { PAGES } from '../../types/navigation/PageConfig'
+import { PAGES, type PageWithParentLabel } from '../../types/navigation/PageConfig'
 import DrawerSearch from './DrawerSearch'
 import RecipeList from './RecipeList'
 import GlobalDialog from '../dialog/GlobalDialog'
@@ -71,7 +71,7 @@ const DrawerNav = () => {
         </Button>
         <DrawerSearch value={searchTerm} onChange={setSearchTerm} />
         <RecipeList
-          recipes={searchTerm ? filteredRecipes : (PAGES as any)}
+          recipes={searchTerm ? filteredRecipes : (PAGES as PageWithParentLabel)}
           onNavigate={handleNavigate}
         />
         <LangSelector />

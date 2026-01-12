@@ -1,9 +1,9 @@
 import { List } from '@mui/material'
-import type { Page } from '../../types/navigation/PageConfig'
+import type { PageWithParentLabel } from '../../types/navigation/PageConfig'
 import DrawerItem from './DrawerItem'
 
 interface RecipeListProps {
-  recipes: (Page & { parentLabel?: string })[]
+  recipes: PageWithParentLabel
   onNavigate: (path: string) => void
 }
 
@@ -12,7 +12,7 @@ const RecipeList = ({ recipes, onNavigate }: RecipeListProps) => {
     <List sx={{ width: 280 }}>
       {recipes.map((recipe) => (
         <DrawerItem
-          page={recipe}
+          page={recipe.isParent ? recipe : recipe}
           onNavigate={onNavigate}
         />
       ))}

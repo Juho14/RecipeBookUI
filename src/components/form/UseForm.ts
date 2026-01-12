@@ -10,7 +10,7 @@ import { resolverWrapper } from './ResolverWrapper'
 
 interface ExtendedUseFormOptions<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = any
+  TContext = unknown
 > {
   defaultValues: DefaultValues<TFieldValues>
   resolver?: Resolver<TFieldValues, TContext>
@@ -21,14 +21,14 @@ interface ExtendedUseFormOptions<
 
 export interface ExtendedUseFormReturn<
   TFieldValues extends FieldValues,
-  TContext = any
+  TContext = unknown
 > extends UseFormReturn<TFieldValues, TContext> {
   onSubmit: SubmitHandler<TFieldValues>
 }
 
 const useForm = <
   TFieldValues extends FieldValues = FieldValues,
-  TContext = any
+  TContext = unknown
 >(
   options: ExtendedUseFormOptions<TFieldValues, TContext>
 ): ExtendedUseFormReturn<TFieldValues, TContext> => {

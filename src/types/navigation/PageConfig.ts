@@ -13,8 +13,8 @@ export type Page =
       isParent: true
     }
 
+export type PageWithParentLabel = (Page & { parentLabel?: string })[]
 export type LeafPage = Extract<Page, { path: string }>
-export type ParentPage = Extract<Page, { children: any[] }>
 
 export const PAGES: Page[] = [
   { label: 'Home', path: '/' },

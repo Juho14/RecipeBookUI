@@ -18,6 +18,8 @@ const Nutrients = () => {
 
   const { total, perServing } = calculateMacros(recipe)
 
+  console.log(total)
+
   return (
     <TableContainer component={Paper}>
       <Table>
