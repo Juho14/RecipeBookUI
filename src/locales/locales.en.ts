@@ -17,7 +17,8 @@ const en = {
     realWorldMeasurement: 'Real world measurement (e.g., 1 tbsp)'
   },
   ingredients: {
-    h1: 'Ingredients'
+    h1: 'Ingredients',
+    kcalMismatch: 'Calories do not match macros'
   },
   form: {
     required: 'This field is required'

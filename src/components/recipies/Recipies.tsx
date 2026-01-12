@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setActiveRecipe } from '../../store/recipeSlice'
 import { RECIPE_LIST } from '../../constants/Data/Recipies/RecipeList'
+import { GlobalSEO } from '../seo/GlobalSEO'
 
 const Recipes = () => {
   const [showRecipeDialog, setShowRecipeDialog] = useState(false)
