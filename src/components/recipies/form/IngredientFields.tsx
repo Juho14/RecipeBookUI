@@ -1,5 +1,5 @@
 import { Button, Grid, IconButton, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import Selector from '../../form/inputs/Selector'
 import TextInput from '../../form/inputs/TextInput'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -23,7 +23,7 @@ interface IngredientFieldsProps {
 const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   const { control, getValues, setValue, watch } = useFormContext()
   const { t } = useTranslation()
-  const [hasDensity, setHasDensity] = useState(false)
+
 
   const {
     fields: ingredientsFields,
@@ -55,11 +55,8 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
 
   const handleIngredientChange = (index: number, value: number) => {
     const ingredient = getIngredientById(value)
-    console.log(ingredient)
-    if (ingredient?.density) setHasDensity(true)
-    else {
+    if (!!!ingredient?.density) {
       resetCookingUnit(index)
-      setHasDensity(false)
     }
   }
 
@@ -76,12 +73,10 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
         <Typography variant='h6'>{t('recipies.ingredients')}</Typography>
       </Grid>
       {ingredientsFields.map((field, index) => {
-        // Watch the selected ingredient ID and cooking unit for this row
         const ingredientId = watch(`ingredients.${index}.ingredient.id`)
         const cookingUnit = watch(`ingredients.${index}.cookingUnit`)
-
-        // Determine if this ingredient has density
-        const hasDensity = ingredientId ? !!getIngredientById(ingredientId)?.density : false
+        const selectedIngredient = ingredientId ? getIngredientById(ingredientId) : null
+        const hasDensity = !!selectedIngredient?.density
 
         return (
           <React.Fragment key={field.id}>
@@ -103,19 +98,25 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
               )}
 
               {/* Show "Amount" input only if cookingUnit is NOT 'g' */}
-              {hasDensity && cookingUnit && cookingUnit !== 'g' && (
+              {hasDensity && cookingUnit !== 'g' ? (
                 <TextInput
                   name={`ingredients.${index}.amount`}
                   label={t('recipies.realWorldMeasurement')}
                   onChange={() => handleMeasureChange(index)}
                 />
+              ) : (
+                <>
+                  <TextInput
+                    name={`ingredients.${index}.grams`}
+                    label={t('recipies.grams')}
+                  />
+                  <Grid size={{ xs: 2 }}>
+                    <IconButton onClick={() => removeIngredient(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </>
               )}
-
-              {/* Always show grams */}
-              <TextInput
-                name={`ingredients.${index}.grams`}
-                label={t('recipies.grams')}
-              />
             </Grid>
           </React.Fragment>
         )
