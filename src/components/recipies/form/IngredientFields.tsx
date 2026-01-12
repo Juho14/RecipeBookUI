@@ -21,7 +21,7 @@ interface IngredientFieldsProps {
 }
 
 const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
-  const { control, getValues, setValue } = useFormContext()
+  const { control, getValues, setValue, watch } = useFormContext()
   const { t } = useTranslation()
   const [hasDensity, setHasDensity] = useState(false)
 
@@ -38,7 +38,8 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
     INGREDIENTS
   ).map((ingredient) => ({
     value: ingredient.id,
-    label: ingredient.name
+    label: ingredient.name,
+    density: ingredient.density
   }))
 
   const cookingUnitOptions: SelectOption<CookingUnit>[] = COOKING_UNITS.map(
@@ -47,9 +48,9 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
       label: t(`cookingUnit.${unit}`)
     })
   )
-
   const resetCookingUnit = (index: number) => {
     setValue(`ingredients.${index}.amount`, '')
+    setValue(`ingredients.${index}.cookingUnit`, 'g')
   }
 
   const handleIngredientChange = (index: number, value: number) => {
@@ -74,40 +75,52 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
       <Grid size={{ xs: 12 }}>
         <Typography variant='h6'>{t('recipies.ingredients')}</Typography>
       </Grid>
-      {ingredientsFields.map((field, index) => (
-        <React.Fragment key={field.id}>
-          <Grid size={{ xs: 12 }}>
-            <Selector
-              name={`ingredients.${index}.ingredient.id`}
-              label={t('recipies.ingredient')}
-              options={ingredientOptions}
-              onChange={(value) => handleIngredientChange(index, value)}
-            />
-            {hasDensity && (
-              <Selector
-                name={`ingredients.${index}.cookingUnit`}
-                label={t('recipies.cookingUnit')}
-                options={cookingUnitOptions}
-              />
-            )}
+      {ingredientsFields.map((field, index) => {
+        // Watch the selected ingredient ID and cooking unit for this row
+        const ingredientId = watch(`ingredients.${index}.ingredient.id`)
+        const cookingUnit = watch(`ingredients.${index}.cookingUnit`)
 
-            <TextInput
-              name={`ingredients.${index}.amount`}
-              label={t('recipies.realWorldMeasurement')}
-              onChange={() => handleMeasureChange(index)}
-            />
-            <TextInput
-              name={`ingredients.${index}.grams`}
-              label={t('recipies.grams')}
-            />
-          </Grid>
-          <Grid size={{ xs: 2 }}>
-            <IconButton onClick={() => removeIngredient(index)}>
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
-        </React.Fragment>
-      ))}
+        // Determine if this ingredient has density
+        const hasDensity = ingredientId ? !!getIngredientById(ingredientId)?.density : false
+
+        return (
+          <React.Fragment key={field.id}>
+            <Grid size={{ xs: 12 }}>
+              <Selector
+                name={`ingredients.${index}.ingredient.id`}
+                label={t('recipies.ingredient')}
+                options={ingredientOptions}
+                onChange={(value) => handleIngredientChange(index, value)}
+              />
+
+              {/* Only show cooking unit selector if ingredient has density */}
+              {hasDensity && (
+                <Selector
+                  name={`ingredients.${index}.cookingUnit`}
+                  label={t('recipies.cookingUnit')}
+                  options={cookingUnitOptions}
+                />
+              )}
+
+              {/* Show "Amount" input only if cookingUnit is NOT 'g' */}
+              {hasDensity && cookingUnit && cookingUnit !== 'g' && (
+                <TextInput
+                  name={`ingredients.${index}.amount`}
+                  label={t('recipies.realWorldMeasurement')}
+                  onChange={() => handleMeasureChange(index)}
+                />
+              )}
+
+              {/* Always show grams */}
+              <TextInput
+                name={`ingredients.${index}.grams`}
+                label={t('recipies.grams')}
+              />
+            </Grid>
+          </React.Fragment>
+        )
+      })}
+
       <Grid size={{ xs: 12 }}>
         <Button
           startIcon={<AddIcon />}
