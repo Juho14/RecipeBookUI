@@ -2,6 +2,7 @@ import type { Ingredient } from '../../../types/ingredients/Ingredient'
 import { INGREDIENT_TYPE } from '../../../types/ingredients/IngredientTypes'
 
 // Macros displayed as per 100g
+// If label shows as per ml, density is equal to 1
 export const INGREDIENTS: Record<string, Ingredient> = {
   TOMATO: {
     id: 1,
@@ -92,10 +93,10 @@ export const INGREDIENTS: Record<string, Ingredient> = {
       fats: { total: 0, saturated: 0 },
       carbs: { total: 6.7, sugars: 1.4 },
       protein: 6.1,
-      salt: 35,
+      salt: 14,
       fiber: 0
     },
-    density: 1.16
+    density: 1
   },
     HOISIN_SAUCE: {
     id: 8,

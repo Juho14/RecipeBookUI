@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Recipes from './components/recipies/Recipies'
 import Layout from './layout/Layout'
 import FrontPage from './components/frontPage/FrontPage'
-import IngredientsForm from './components/ingredients/IngredientsForm'
+import IngredientsForm from './components/ingredients/form/IngredientsForm'
 import RecipeForm from './components/recipies/form/RecipeForm'
 
 export const App = () => {

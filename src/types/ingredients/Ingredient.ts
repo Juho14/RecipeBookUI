@@ -1,3 +1,4 @@
+import type { IngredientTypeId } from './IngredientTypes'
 import type { Macros } from './Macros'
 
 export type Ingredient = {
@@ -6,9 +7,9 @@ export type Ingredient = {
   nameFi?: string
   macros: Macros
   density?: number
-  type: number
+  type: IngredientTypeId
 }
 
 export type FormIngredient = Omit<Ingredient, 'id'> & {
-  id?: number
+  id?: IngredientTypeId
 }
