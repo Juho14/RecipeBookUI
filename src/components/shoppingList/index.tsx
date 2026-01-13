@@ -1,3 +1,6 @@
+import { RECIPE_LIST } from "../../constants/Data/Recipies/RecipeList"
+import type { Recipe } from "../../types/Recipe/Recipe"
+
 const ShoppingList = () => {
     // Allow user to select recipies or ingredients.
     // The ingredients are then grouped by ingredient type
@@ -17,6 +20,8 @@ const ShoppingList = () => {
     // Option to group by recipies or ingredient types.
     // Below list of external ingredients (name, amount, unit, checked(later))
     // Macro summary (behind a toggle)
+
+    const selectedRecipies: Recipe[] = []
     return <div>Shopping list component</div>
 }
 export default ShoppingList
