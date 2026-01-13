@@ -38,20 +38,19 @@ const RecipeForm = () => {
   const form = useForm({
     defaultValues,
     onSubmit
-    // resolver This is the validator function. Add later.
   })
 
   return (
     <Form form={form}>
       <Grid container spacing={2} maxWidth={500} justifySelf={'center'}>
         <Grid size={{ xs: 12 }}>
-          <TextInput name='name' label={'Recipe name'} />
+          <TextInput name='name' label={'Recipe name'} required />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <TextInput name='time' label='Duration' />
+          <TextInput name='time' label='Duration' required />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <TextInput name='servings' label='Servings' />
+          <TextInput name='servings' label='Servings' required />
         </Grid>
         <IngredientFields defaultIngredient={defaultIngredient} />
         <ProcessFields />

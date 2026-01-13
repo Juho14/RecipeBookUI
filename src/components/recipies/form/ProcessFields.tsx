@@ -32,6 +32,7 @@ const ProcessFields = () => {
               <TextInput
                 name={`process.${index}.en`}
                 label={`Step ${index + 1}`}
+                required
               />
             </Grid>
             <Grid size={{ xs: 2 }}>

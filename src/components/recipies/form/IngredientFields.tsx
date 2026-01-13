@@ -99,6 +99,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
                 label={t('recipies.ingredient')}
                 options={ingredientOptions}
                 onChange={(value) => handleIngredientChange(index, value)}
+                required
               />
             </Grid>
             <Grid size={{ xs: 1 }}>
@@ -113,6 +114,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
                   name={`ingredients.${index}.cookingUnit`}
                   label={t('recipies.cookingUnit')}
                   options={cookingUnitOptions}
+                  required={hasDensity}
                 />
               </Grid>
             )}
@@ -123,11 +125,13 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
                   name={`ingredients.${index}.amount`}
                   label={t('recipies.realWorldMeasurement')}
                   onChange={() => handleMeasureChange(index)}
+                  required={showAmount}
                 />
               ) : (
                 <TextInput
                   name={`ingredients.${index}.grams`}
                   label={t('recipies.grams')}
+                  required={!showAmount}
                 />
               )}
             </Grid>
