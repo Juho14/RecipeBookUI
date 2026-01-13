@@ -2,6 +2,7 @@ import type { Recipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
 export const TEST_RECIPE: Recipe = {
+  id: 3,
   name: 'sdfg',
   slug: '',
   imgPath: '',

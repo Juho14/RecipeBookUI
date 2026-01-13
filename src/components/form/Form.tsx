@@ -12,21 +12,21 @@ interface ExtendedFormProps<T extends FieldValues> {
   className?: string
 }
 
-const Form = <T extends FieldValues>({
+const Form = <TFieldValues extends FieldValues>({
   form,
   resetOnSubmit = true,
   children,
   className
-}: ExtendedFormProps<T>) => {
+}: ExtendedFormProps<TFieldValues>) => {
   const { reset, handleSubmit } = form
 
-  const _onSubmit: SubmitHandler<T> = (data) => {
+  const _onSubmit: SubmitHandler<TFieldValues> = (data) => {
     form.onSubmit(data)
     if (resetOnSubmit) reset()
   }
 
   return (
-    <FormProvider {...form}>
+    <FormProvider<TFieldValues> {...form}>
       <form onSubmit={handleSubmit(_onSubmit)} className={className}>
         {children}
       </form>

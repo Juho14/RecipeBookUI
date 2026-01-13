@@ -18,10 +18,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
 interface SelectorProps<T extends string | number> {
   name: string
   label: string
+  options: SelectOption<T>[]
   defaultValue?: T
   disabled?: boolean
   required?: boolean | string // true = default, string = custom message
-  options: SelectOption<T>[]
   fullWidth?: boolean
   classes?: SelectorClasses
   sx?: SxProps<Theme>

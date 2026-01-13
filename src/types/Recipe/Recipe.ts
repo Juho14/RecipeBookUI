@@ -18,6 +18,7 @@ export type RecipeProcessStep = {
 }
 
 export type Recipe = {
+  id: number
   name: string
   slug: string
   imgPath?: string

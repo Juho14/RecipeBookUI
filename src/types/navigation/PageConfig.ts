@@ -38,6 +38,7 @@ export const PAGES: Page[] = [
     isParent: true,
     children: [{ label: 'Oven Salmon', path: '/recipes/fish/salmon' }]
   },
+  { label: 'Shopping list', path: '/shopping-list' },
   {
     label: 'Add data',
     isParent: true,

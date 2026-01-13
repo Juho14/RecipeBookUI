@@ -19,6 +19,7 @@ const defaultIngredient: RecipeIngredient = {
 }
 
 const defaultValues: DefaultValues<Recipe> = {
+  id: 0,
   name: '',
   slug: '',
   imgPath: '',

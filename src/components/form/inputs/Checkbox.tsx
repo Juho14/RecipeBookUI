@@ -17,6 +17,7 @@ interface CheckboxProps<T extends boolean | string | number> {
   name: string
   label: string
   defaultValue?: T
+  checked?: boolean
   disabled?: boolean
   required?: boolean | string // true = default, string = custom message
   classes?: SelectorClasses
@@ -29,6 +30,7 @@ const CheckboxInput = <T extends boolean | string | number>({
   name,
   label,
   defaultValue,
+  checked = false,
   disabled = false,
   required = false,
   onChange,
@@ -63,6 +65,7 @@ const CheckboxInput = <T extends boolean | string | number>({
       <Checkbox
         {...field}
         value={field.value ?? falseValue}
+        checked={checked}
         disabled={disabled}
         onChange={handleChange}
         className={cx(classes.root, classes?.root)}

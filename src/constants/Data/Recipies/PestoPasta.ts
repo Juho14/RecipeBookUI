@@ -2,6 +2,7 @@ import type { Recipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
 export const PESTO_PASTA: Recipe = {
+  id: 2,
   name: 'Pesto Pasta',
   slug: '/pasta/chicken-pesto',
   imgPath: '/images/pesto-pasta.jpg',
@@ -13,24 +14,24 @@ export const PESTO_PASTA: Recipe = {
       ingredient: INGREDIENTS.OLIVE_OIL,
       grams: 20,
       cookingUnit: 'tbsp',
-      amount: 1.5,
+      amount: 1.5
     },
     { ingredient: INGREDIENTS.SUGAR, grams: 5, cookingUnit: 'g' },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
       grams: 180,
       cookingUnit: 'dl',
-      amount: 2,
-    },
+      amount: 2
+    }
   ],
   process: [
     { en: 'Cook the rice according to package instructions.' },
     {
-      en: 'Mix olive oil with chopped tomatoes and sugar to create a simple sauce.',
+      en: 'Mix olive oil with chopped tomatoes and sugar to create a simple sauce.'
     },
     {
-      en: 'Combine the cooked rice with the sauce and stir in pesto (optional).',
+      en: 'Combine the cooked rice with the sauce and stir in pesto (optional).'
     },
-    { en: 'Serve hot with grated parmesan or fresh basil.' },
-  ],
+    { en: 'Serve hot with grated parmesan or fresh basil.' }
+  ]
 }

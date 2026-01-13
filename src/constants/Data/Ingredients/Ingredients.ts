@@ -98,7 +98,7 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
     density: 1
   },
-    HOISIN_SAUCE: {
+  HOISIN_SAUCE: {
     id: 8,
     name: 'Hoisin sauce',
     type: INGREDIENT_TYPE.SAUCE,
@@ -112,12 +112,12 @@ export const INGREDIENTS: Record<string, Ingredient> = {
     },
     density: 1.16
   },
-   SESAME_OIL: {
+  SESAME_OIL: {
     id: 9,
     name: 'Sesame Oil',
     type: INGREDIENT_TYPE.OIL,
     macros: {
-      kcal: 900 ,
+      kcal: 900,
       fats: { total: 100, saturated: 13 },
       carbs: { total: 0, sugars: 0 },
       protein: 0,
@@ -125,6 +125,13 @@ export const INGREDIENTS: Record<string, Ingredient> = {
       fiber: 0
     },
     density: 1
-  },
-
+  }
 }
+
+export const INGREDIENTS_BY_ID: Record<number, Ingredient> = Object.values(INGREDIENTS).reduce(
+  (acc, ingredient) => {
+    acc[ingredient.id] = ingredient
+    return acc
+  },
+  {} as Record<number, Ingredient>
+)

@@ -2,6 +2,7 @@ import type { Recipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
 export const HOISIN_CHICKEN: Recipe = {
+  id: 1,
   name: 'Hoisin Chicken',
   slug: '/asian/hoisin-chicken',
   imgPath: '/images/hoisin-chicken.jpg',
