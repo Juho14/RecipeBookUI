@@ -1,5 +1,5 @@
 import { Checkbox } from '@mui/material'
-import type { SxProps, Theme } from '@mui/material/styles'
+import type { Theme } from '@mui/material/styles'
 import type { SelectorClasses } from '../../../types/inputStyles/SelectorClasses'
 import { makeStyles } from 'tss-react/mui'
 import { useController, useFormContext } from 'react-hook-form'
