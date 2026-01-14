@@ -7,6 +7,7 @@ import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import IngredientTable from './IngredientTable'
 import RecipeTable from './RecipeTable'
 import { useState } from 'react'
+import ManualItemsTable from './ManualItemsTable'
 
 type GroupMode = 'ingredient' | 'recipe'
 
@@ -24,6 +25,11 @@ const SummarisedList = () => {
     control
   })
 
+  const manualItems = useWatch({
+    name: 'manualItems',
+    control
+  })
+
   const unifiedIngredients = buildUnifiedIngredients(
     selectedRecipies,
     selectedIngredients
@@ -31,6 +37,9 @@ const SummarisedList = () => {
 
   const ingredientsById = groupByIngredientId(unifiedIngredients)
   const ingredientsByRecipe = groupIngByRecipe(unifiedIngredients)
+
+  // Todo: Add an option to remove ingredients from the list even if they are
+  // included via recipes.
 
   return (
     <Box mt={4}>
@@ -55,6 +64,7 @@ const SummarisedList = () => {
       {groupMode === 'recipe' && (
         <RecipeTable ingredientsByRecipe={ingredientsByRecipe} />
       )}
+      <ManualItemsTable items={manualItems} />
     </Box>
   )
 }

@@ -20,9 +20,12 @@ const useStyles = makeStyles()((theme: Theme) => ({
   }
 }))
 
+type TextInputType = 'text' | 'number'
+
 interface TextInputProps<T extends string | number> {
   name: string
   label: string
+  type?: TextInputType
   defaultValue?: T
   disabled?: boolean
   required?: boolean | string // true = default, string = custom message
@@ -36,6 +39,7 @@ interface TextInputProps<T extends string | number> {
 const TextInput = <T extends string | number>({
   name,
   label,
+  type = 'text',
   defaultValue,
   disabled = false,
   required = false,
@@ -45,6 +49,7 @@ const TextInput = <T extends string | number>({
 }: TextInputProps<T>) => {
   const { classes, cx } = useStyles()
   const { control } = useFormContext()
+  const isNumber = type === 'number'
 
   const {
     field,
@@ -59,8 +64,13 @@ const TextInput = <T extends string | number>({
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    field.onChange(e)
-    onChange?.(e.target.value as T)
+    const rawValue = e.target.value
+    let value = isNumber ? Number(rawValue) : rawValue
+
+    if (isNumber && isNaN(Number(value))) value = ''
+
+    field.onChange(value)
+    onChange?.(value as T)
   }
 
   return (

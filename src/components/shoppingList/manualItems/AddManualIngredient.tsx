@@ -52,6 +52,7 @@ const AddManualIngredient = () => {
               <TextInput
                 name={`selectedIngredients.${index}.amount`}
                 label='Amount'
+                type='number'
               />
             </Grid>
             <Grid size={{ xs: 3.5 }}>

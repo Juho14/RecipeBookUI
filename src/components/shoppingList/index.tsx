@@ -2,12 +2,14 @@ import { Box, Grid } from '@mui/material'
 import { Form, useForm } from '../form'
 import AddRecipeToList from './addRecipiesToList/AddRecipeToList'
 import type { ShoppingListForm } from '../../types/shoppingList/ShoppingListForm'
-import AddManualIngredient from './manualIngredients/AddManualIngredient'
+import AddManualIngredient from './manualItems/AddManualIngredient'
 import SummarisedList from './summary/SummarisedList'
+import AddManualItem from './manualItems/AddManualItem'
 
 const defaultValues: ShoppingListForm = {
   selectedRecipies: [],
-  selectedIngredients: []
+  selectedIngredients: [],
+  manualItems: []
 }
 
 const ShoppingList = () => {
@@ -50,6 +52,10 @@ const ShoppingList = () => {
         <Grid size={{ xs: 12 }}>
           <Box>Add ingredients manually</Box>
           <AddManualIngredient />
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <Box>Add items manually</Box>
+          <AddManualItem />
         </Grid>
         <Grid size={{ xs: 12 }}>
           <SummarisedList />

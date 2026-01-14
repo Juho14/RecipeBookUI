@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import type { groupIngByRecipe } from '../../../utils/shoppingListUtils/groupIngByRecipe'
 import { getIngredientName } from '../../../utils/ingredientUtils/getIngredientName'
+import { Fragment } from 'react/jsx-runtime'
 
 type RecipeTableProps = {
   ingredientsByRecipe: ReturnType<typeof groupIngByRecipe>
@@ -27,23 +28,29 @@ const RecipeTable = ({ ingredientsByRecipe }: RecipeTableProps) => (
       </TableHead>
 
       <TableBody>
-        {ingredientsByRecipe.map((group) =>
-          group.ingredients.map((item, index) => (
-            <TableRow key={`${group.recipeId}-${index}`}>
-              {index === 0 && (
-                <TableCell rowSpan={group.ingredients.length}>
-                  <Typography fontWeight={500}>{group.recipeName}</Typography>
-                </TableCell>
-              )}
+        {ingredientsByRecipe.map((group) => {
+          return (
+            <Fragment key={group.recipeId}>
+              {group.ingredients.map((item, index) => (
+                <TableRow key={`${group.recipeId}-${index}`}>
+                  {index === 0 && (
+                    <TableCell rowSpan={group.ingredients.length}>
+                      <Typography fontWeight={500}>
+                        {group.recipeName}
+                      </Typography>
+                    </TableCell>
+                  )}
 
-              <TableCell>{getIngredientName(item.ingredientId)}</TableCell>
+                  <TableCell>{getIngredientName(item.ingredientId)}</TableCell>
 
-              <TableCell>
-                {item.amount} {item.unit}
-              </TableCell>
-            </TableRow>
-          ))
-        )}
+                  <TableCell>
+                    {item.amount} {item.unit}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </Fragment>
+          )
+        })}
       </TableBody>
     </Table>
   </TableContainer>

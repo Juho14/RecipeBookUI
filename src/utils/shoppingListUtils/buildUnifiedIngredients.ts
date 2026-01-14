@@ -6,7 +6,7 @@ const getIngredientsFromRecipes = (recipes: Recipe[]): UnifiedIngredient[] => {
   return recipes.flatMap((recipe) =>
     recipe.ingredients.map((recipeIng) => ({
       ingredientId: recipeIng.ingredient.id,
-      amount: recipeIng.grams,
+      amount: recipeIng.amount ?? recipeIng.grams,
       unit: recipeIng.cookingUnit,
       source: {
         type: 'recipe',
