@@ -42,7 +42,8 @@ const defaultValues: DefaultValues<IngredientFormValues> = defaultFormValues
 
 const IngredientsForm = () => {
   const dispatch = useDispatch()
-  const onSubmit = (data: Ingredient) => {
+  const onSubmit = (data: IngredientFormValues) => {
+    console.log(data)
     dispatch(addIngredient(data))
   }
 
