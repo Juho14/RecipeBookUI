@@ -12,6 +12,7 @@ import { INGREDIENT_TYPE } from '../../../types/ingredients/IngredientTypes'
 import CheckboxInput from '../../form/inputs/Checkbox'
 import { useIngredientLiquidLogic } from './useIngredientLiquidLogic'
 import MacroFields from './MacroFields'
+import { post } from '../../../requests/Request'
 
 type ManageIngredientForm = {
   useMl: boolean
@@ -38,19 +39,44 @@ const defaultFormValues: IngredientFormValues = {
   }
 }
 
+const testValues: IngredientFormValues = 
+  {
+    name: "PastaEN",
+    nameFi: "PastaFI",
+    type: 3,
+    useMl: false,
+    isLiquidOverride: false,
+    density: 1,
+    macros: {
+        kcal: 350,
+        fats: {
+            total: 2.5,
+            saturated: 0.6
+        },
+        carbs: {
+            total: 66,
+            sugars: 3.7
+        },
+        protein: 12,
+        salt: 0,
+        fiber: 7.5
+    }
+};
 const defaultValues: DefaultValues<IngredientFormValues> = defaultFormValues
 
 const IngredientsForm = () => {
   const dispatch = useDispatch()
   const onSubmit = (data: IngredientFormValues) => {
     console.log(data)
+    console.log(testValues)
     dispatch(addIngredient(data))
+    post('/ingredients', testValues)
   }
 
   const form = useForm<IngredientFormValues>({
     defaultValues,
     onSubmit,
-    resolver: ingredientFormValidator
+    // resolver: ingredientFormValidator
   })
 
   const { control } = form

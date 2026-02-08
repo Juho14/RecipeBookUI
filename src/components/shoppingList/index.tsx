@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { Form, useForm } from '../form'
 import AddRecipeToList from './addRecipiesToList/AddRecipeToList'
 import type { ShoppingListForm } from '../../types/shoppingList/ShoppingListForm'
@@ -59,6 +59,11 @@ const ShoppingList = () => {
         </Grid>
         <Grid size={{ xs: 12 }}>
           <SummarisedList />
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <Button fullWidth variant='contained' type='submit'>
+            Save list
+          </Button>
         </Grid>
       </Grid>
     </Form>
