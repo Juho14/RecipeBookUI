@@ -14,6 +14,8 @@ import {
 } from '../../../types/ingredients/CookingUnit'
 import { amountToGrams } from '../../../utils/ingredientUtils/amountToGrams'
 import { getIngredientById } from '../../../utils/ingredientUtils/getIngredientById'
+import { useSelector } from 'react-redux'
+import type { RootState } from '../../../store'
 
 interface IngredientFieldsProps {
   defaultIngredient: RecipeIngredient
@@ -38,13 +40,15 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
     defaultValue: []
   })
 
-  const ingredientOptions: SelectOption<number>[] = Object.values(
-    INGREDIENTS
-  ).map((ingredient) => ({
-    value: ingredient.id,
-    label: ingredient.name,
-    density: ingredient.density
-  }))
+  const ingredients = useSelector((state: RootState) => state.ingredients.data)
+
+  const ingredientOptions: SelectOption<number>[] = ingredients.map(
+    (ingredient) => ({
+      value: ingredient.id,
+      label: ingredient.name,
+      density: ingredient.density
+    })
+  )
 
   const cookingUnitOptions: SelectOption<CookingUnit>[] = COOKING_UNITS.map(
     (unit) => ({

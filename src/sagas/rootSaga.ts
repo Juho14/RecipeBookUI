@@ -1,8 +1,8 @@
 import { all, fork } from 'redux-saga/effects'
-import { watchChangeLanguageSaga } from './lang.saga'
+import * as sagas from './index'
 
-export function* rootSaga() {
-  yield all([
-    fork(watchChangeLanguageSaga)
-  ])
+export default function* rootSaga() {
+  yield all(
+    Object.values(sagas).map(fork)
+  )
 }

@@ -11,6 +11,8 @@ import TextInput from '../../form/inputs/TextInput'
 import ProcessFields from './ProcessFields'
 import IngredientFields from './IngredientFields'
 import type { Ingredient } from '../../../types/ingredients/Ingredient'
+import { useEffect } from 'react'
+import { getIngredients } from '../../../store/ingredientsSlice'
 
 const defaultIngredient: RecipeIngredient = {
   ingredient: {} as Ingredient,
@@ -31,6 +33,11 @@ const defaultValues: DefaultValues<Recipe> = {
 
 const RecipeForm = () => {
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [])
+
   const onSubmit = (data: Recipe) => {
     console.log(data)
     dispatch(addRecipe(data))
