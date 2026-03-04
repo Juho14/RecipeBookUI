@@ -50,3 +50,14 @@ export const PAGES: Page[] = [
 
   { label: 'About', path: '/about' }
 ]
+
+
+export const mergePages = (
+  defaultPages: Page[],
+  recipePages: PageWithParentLabel
+): PageWithParentLabel => {
+  return [
+    ...defaultPages,
+    ...recipePages
+  ];
+};

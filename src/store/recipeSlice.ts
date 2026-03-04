@@ -1,11 +1,17 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { Recipe } from '../types/Recipe/Recipe'
+import type { AnyRecipe, Recipe } from '../types/Recipe/Recipe'
 
 interface RecipeState {
-  activeRecipe: Recipe | null
+  data: Recipe[]
+  status: 'idle'
+  error: undefined
+  activeRecipe: AnyRecipe | null
 }
 
 const initialState: RecipeState = {
+  data: [],
+  status: 'idle',
+  error: undefined,
   activeRecipe: null
 }
 
@@ -13,17 +19,33 @@ export const recipeSlice = createSlice({
   name: 'recipe',
   initialState,
   reducers: {
-    setActiveRecipe: (state, action: PayloadAction<Recipe>) => {
+    getRecipes: () => {},
+    getRecipesSuccess: (state, action: PayloadAction<Recipe[]>) => {
+      state.data = action.payload
+    },
+    addRecipe: (state, action: PayloadAction<Recipe>) => {},
+    addRecipeSuccess: (state, action: PayloadAction<Recipe>) => {
+      state.data.push(action.payload)
+    },
+    getRecipeDetailsSuccess: (state, action: PayloadAction<Recipe>) => {
+      state.activeRecipe = action.payload
+    },
+    setActiveRecipe: (state, action: PayloadAction<AnyRecipe>) => {
       state.activeRecipe = action.payload
     },
     clearActiveRecipe: (state) => {
       state.activeRecipe = null
-    },
-    // Actually dispatch this action to the backend
-    addRecipe: (state, action: PayloadAction<Recipe>) => {}
+    }
   }
 })
 
-export const { setActiveRecipe, clearActiveRecipe, addRecipe } =
-  recipeSlice.actions
+export const {
+  getRecipes,
+  getRecipesSuccess,
+  addRecipe,
+  addRecipeSuccess,
+  getRecipeDetailsSuccess,
+  setActiveRecipe,
+  clearActiveRecipe
+} = recipeSlice.actions
 export default recipeSlice.reducer

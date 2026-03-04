@@ -4,7 +4,6 @@ import { Form, useForm } from '../../form'
 import TextInput from '../../form/inputs/TextInput'
 import Selector from '../../form/inputs/Selector'
 import type { Ingredient } from '../../../types/ingredients/Ingredient'
-import { addIngredient } from '../../../store/ingredientsSlice'
 import { INGREDIENT_TYPE_OPTIONS } from '../../../constants/Data/Ingredients/IngredientTypeOptions'
 import { useWatch, type DefaultValues } from 'react-hook-form'
 import { ingredientFormValidator } from './ingredientValidator'
@@ -12,7 +11,8 @@ import { INGREDIENT_TYPE } from '../../../types/ingredients/IngredientTypes'
 import CheckboxInput from '../../form/inputs/Checkbox'
 import { useIngredientLiquidLogic } from './useIngredientLiquidLogic'
 import MacroFields from './MacroFields'
-import { post } from '../../../requests/Request'
+import { addIngredient } from '../../../fetches/ingredients'
+import { useAppDispatch } from '../../../store/hooks'
 
 type ManageIngredientForm = {
   useMl: boolean
@@ -39,11 +39,10 @@ const defaultFormValues: IngredientFormValues = {
   }
 }
 
-
 const defaultValues: DefaultValues<IngredientFormValues> = defaultFormValues
 
 const IngredientsForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const onSubmit = (data: IngredientFormValues) => {
     console.log(data)
     dispatch(addIngredient(data))

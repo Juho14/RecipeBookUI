@@ -1,32 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from 'redux-saga'
 import langReducer from './langSlice'
 import ingredientReducer from './ingredientsSlice'
+import recipeNavReducer from './recipeNavSlice'
 import { persistStore } from 'redux-persist'
 import { persistedRecipeReducer } from './persist'
-import rootSaga from '../sagas/rootSaga'
-
-let sagaStarted = false
-
-const sagaMiddleware = createSagaMiddleware()
 
 export const store = configureStore({
   reducer: {
     recipe: persistedRecipeReducer,
     lang: langReducer,
-    ingredients: ingredientReducer
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: false,
-      serializableCheck: false
-    }).concat(sagaMiddleware)
+    ingredients: ingredientReducer,
+    recipeNav: recipeNavReducer
+  }
 })
-
-if (!sagaStarted) {
-  sagaStarted = true
-  sagaMiddleware.run(rootSaga)
-}
 
 export const persistor = persistStore(store)
 

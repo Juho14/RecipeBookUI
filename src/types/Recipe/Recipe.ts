@@ -17,6 +17,16 @@ export type RecipeProcessStep = {
   fi?: string // Optional Finnish step
 }
 
+export type BaseRecipe = {
+  name: string
+  slug: string
+  imgPath?: string
+  ingredients: RecipeIngredient[]
+  time: string
+  process: RecipeProcessStep[]
+  servings: number
+}
+
 export type Recipe = {
   id: number
   name: string
@@ -26,4 +36,15 @@ export type Recipe = {
   time: string
   process: RecipeProcessStep[]
   servings: number
+}
+
+export type AnyRecipe = BaseRecipe | Recipe;
+
+export type RecipeCategory = {
+  id: number,
+  name: string
+}
+export type GroupedRecipes = {
+  category: RecipeCategory,
+  recipes: Recipe[]
 }

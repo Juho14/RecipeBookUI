@@ -1,8 +1,7 @@
-import type { Recipe } from '../../../types/Recipe/Recipe'
+import type { BaseRecipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
-export const HOISIN_CHICKEN: Recipe = {
-  id: 1,
+export const HOISIN_CHICKEN: BaseRecipe = {
   name: 'Hoisin Chicken',
   slug: '/asian/hoisin-chicken',
   imgPath: '/images/hoisin-chicken.jpg',

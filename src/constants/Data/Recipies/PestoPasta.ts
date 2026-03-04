@@ -1,8 +1,7 @@
-import type { Recipe } from '../../../types/Recipe/Recipe'
+import type { BaseRecipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
-export const PESTO_PASTA: Recipe = {
-  id: 2,
+export const PESTO_PASTA: BaseRecipe = {
   name: 'Pesto Pasta',
   slug: '/pasta/chicken-pesto',
   imgPath: '/images/pesto-pasta.jpg',

@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { LANG, type Lang } from '../types/ui/Lang'
+import i18n from '../locales/translator'
 
 interface LangState {
   current: Lang
@@ -15,6 +16,7 @@ export const langSlice = createSlice({
   reducers: {
     setLang(state, action: PayloadAction<Lang>) {
       state.current = action.payload
+      i18n.changeLanguage(action.payload)
     }
   }
 })

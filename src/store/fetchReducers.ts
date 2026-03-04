@@ -1,6 +1,5 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
-import type { RootState } from '.'
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import type { RootState } from '../store'
 
 export interface AsyncState<T> {
   data: T
@@ -8,7 +7,7 @@ export interface AsyncState<T> {
   error?: string
 }
 
-export function createAsyncSlice<T>({
+export function createAsyncSlice<T extends object>({
   name,
   apiCall,
   initialData
@@ -17,51 +16,62 @@ export function createAsyncSlice<T>({
   apiCall: () => Promise<T>
   initialData: T
 }) {
+  const fetchThunk = createAsyncThunk<
+    T,
+    void,
+    { state: RootState; rejectValue: string }
+  >(
+    `${name}/fetch`,
+    async (_, { rejectWithValue }) => {
+      try {
+        return await apiCall()
+      } catch (error: any) {
+        console.error(`Error fetching ${name}:`, error)
+        return rejectWithValue('Failed to fetch data')
+      }
+    },
+    {
+      condition: (_, { getState }) => {
+        const state = getState()
+        const sliceState = state[name as keyof RootState] as AsyncState<T>
+
+        if (sliceState.status === 'loading' || sliceState.status === 'loaded') {
+          return false
+        }
+
+        return true
+      }
+    }
+  )
+
   const initialState: AsyncState<T> = {
     data: initialData,
-    status: 'idle',
-    error: undefined
+    status: 'idle'
   }
 
   const slice = createSlice({
     name,
     initialState,
-    reducers: {
-      request: (state) => {
-        state.status = 'loading'
-        state.error = undefined
-      },
-      success: (state, action: PayloadAction<T>) => {
-        state.data = action.payload as typeof state.data
-        state.status = 'loaded'
-      },
-      failure: (state, action: PayloadAction<string>) => {
-        state.status = 'error'
-        state.error = action.payload
-      }
+    reducers: {},
+    extraReducers: (builder) => {
+      builder
+        .addCase(fetchThunk.pending, (state) => {
+          state.status = 'loading'
+          state.error = undefined
+        })
+        .addCase(fetchThunk.fulfilled, (state, action) => {
+          return {
+            ...state,
+            data: action.payload,
+            status: 'loaded'
+          }
+        })
+        .addCase(fetchThunk.rejected, (state, action) => {
+          state.status = 'error'
+          state.error = action.payload ?? 'Failed to fetch data'
+        })
     }
   })
 
-  function* saga() {
-    const sliceState: AsyncState<T> = yield select(
-      (state: RootState) => (state as any)[name] as AsyncState<T>
-    )
-
-    if (sliceState.status === 'loading' || sliceState.status === 'loaded')
-      return
-
-    try {
-      yield put(slice.actions.request())
-      const data: T = yield call(apiCall)
-      yield put(slice.actions.success(data))
-    } catch {
-      yield put(slice.actions.failure('Failed to fetch data'))
-    }
-  }
-
-  function* watch() {
-    yield takeLatest(slice.actions.request.type, saga)
-  }
-
-  return { slice, saga: watch }
+  return { slice, fetchThunk }
 }

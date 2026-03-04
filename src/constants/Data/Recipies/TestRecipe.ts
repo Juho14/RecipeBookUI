@@ -1,8 +1,7 @@
-import type { Recipe } from '../../../types/Recipe/Recipe'
+import type { BaseRecipe } from '../../../types/Recipe/Recipe'
 import { INGREDIENTS } from '../Ingredients/Ingredients'
 
-export const TEST_RECIPE: Recipe = {
-  id: 3,
+export const TEST_RECIPE: BaseRecipe = {
   name: 'sdfg',
   slug: '',
   imgPath: '',

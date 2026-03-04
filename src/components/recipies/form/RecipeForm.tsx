@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux'
 import { Button, Grid } from '@mui/material'
 
 import type { Recipe } from '../../../types/Recipe/Recipe'
@@ -12,7 +11,8 @@ import ProcessFields from './ProcessFields'
 import IngredientFields from './IngredientFields'
 import type { Ingredient } from '../../../types/ingredients/Ingredient'
 import { useEffect } from 'react'
-import { getIngredients } from '../../../store/ingredientsSlice'
+import { fetchIngredients } from '../../../fetches/ingredients'
+import { useAppDispatch } from '../../../store/hooks'
 
 const defaultIngredient: RecipeIngredient = {
   ingredient: {} as Ingredient,
@@ -32,10 +32,9 @@ const defaultValues: DefaultValues<Recipe> = {
 }
 
 const RecipeForm = () => {
-  const dispatch = useDispatch()
-
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getIngredients())
+    dispatch(fetchIngredients())
   }, [])
 
   const onSubmit = (data: Recipe) => {

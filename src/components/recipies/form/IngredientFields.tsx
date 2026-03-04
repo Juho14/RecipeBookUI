@@ -41,7 +41,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   })
 
   const ingredients = useSelector((state: RootState) => state.ingredients.data)
-
+  console.log(ingredients)
   const ingredientOptions: SelectOption<number>[] = ingredients.map(
     (ingredient) => ({
       value: ingredient.id,

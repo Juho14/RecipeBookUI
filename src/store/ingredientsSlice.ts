@@ -9,7 +9,7 @@ const ingredientSlice = createSlice({
     error: undefined
   },
   reducers: {
-    addIngredient: (state, action: PayloadAction<Ingredient>) => {
+    addIngredientSuccess: (state, action: PayloadAction<Ingredient>) => {
       state.data.push(action.payload)
     },
     getIngredients: () => {},
@@ -23,7 +23,7 @@ export const ingredientReducer = ingredientSlice.reducer
 
 
 export const {
-  addIngredient,
+  addIngredientSuccess,
   getIngredients,
   getIngredientsSuccess
 } = ingredientSlice.actions

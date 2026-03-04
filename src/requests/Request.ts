@@ -1,45 +1,67 @@
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+import type { ApiResponse, HttpMethod } from '../types/requests/requests'
 
 interface RequestOptions {
   method: HttpMethod
   body?: unknown
+  headers?: Record<string, string>
 }
 
+const API_BASE_URL = 'https://localhost:7077/api'
+
 export const request = async <T>(
-  url: string,
+  endpoint: string,
   options: RequestOptions
-): Promise<T> => {
+): Promise<ApiResponse<T>> => {
   let response: Response
 
   try {
-    response = await fetch(url, {
+    response = await fetch(API_BASE_URL + endpoint, {
       method: options.method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...options.headers
       },
       body: options.body ? JSON.stringify(options.body) : undefined
     })
   } catch (error) {
-    throw new Error('There was a problem loading the data.')
+    return Promise.reject({
+      data: undefined,
+      status: 0,
+      error: 'Network error'
+    } as ApiResponse<T>)
   }
 
   if (response.status === 401) {
-    throw new Error('Unauthorized')
+    return Promise.reject({
+      data: undefined,
+      status: 401,
+      error: 'Unauthorized'
+    } as ApiResponse<T>)
   }
 
   if (response.status >= 400 && response.status < 500) {
-    return Promise.reject(await parseError(response))
+    const err = await parseError(response)
+    return Promise.reject({
+      data: undefined,
+      status: response.status,
+      error: err.message
+    } as ApiResponse<T>)
   }
 
   if (response.status >= 500) {
-    throw new Error('There was a problem loading the data.')
+    return Promise.reject({
+      data: undefined,
+      status: response.status,
+      error: 'Server error'
+    } as ApiResponse<T>)
   }
 
   if (response.status === 204) {
-    return undefined as T
+    return { data: undefined as unknown as T, status: 204 } as ApiResponse<T>
   }
 
-  return response.json()
+  const data = await response.json()
+  return { data, status: response.status } as ApiResponse<T>
 }
 
 const parseError = async (response: Response) => {
@@ -49,16 +71,3 @@ const parseError = async (response: Response) => {
     return { message: 'Request failed' }
   }
 }
-
-const API_BASE_URL = "https://localhost:7077/api"
-export const get = <T>(url: string): Promise<T> =>
-  request<T>(API_BASE_URL + url, { method: 'GET' })
-
-export const post = <T, B = unknown>(url: string, body: B): Promise<T> =>
-  request<T>(API_BASE_URL + url, { method: 'POST', body })
-
-export const put = <T, B = unknown>(url: string, body: B): Promise<T> =>
-  request<T>(API_BASE_URL + url, { method: 'PUT', body })
-
-export const del = <T>(url: string): Promise<T> =>
-  request<T>(API_BASE_URL + url, { method: 'DELETE' })

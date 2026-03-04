@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  mergePages,
   PAGES,
   type PageWithParentLabel
 } from '../../types/navigation/PageConfig'
@@ -11,11 +12,15 @@ import RecipeList from './RecipeList'
 import GlobalDialog from '../dialog/GlobalDialog'
 import RecipeSelector from '../../components/recipies/RecipeSelector'
 import LangSelector from './LangSelector'
+import { useAppSelector } from '../../store/hooks'
+import { selectRecipePages } from '../../utils/recipeUtils/selectRecipePages'
 
 const DrawerNav = () => {
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
+  const recipePages = useAppSelector(selectRecipePages)
+  const pages = mergePages(PAGES, recipePages)
 
   const handleNavigate = (path: string) => {
     navigate(path)
@@ -73,12 +78,7 @@ const DrawerNav = () => {
           All recipies
         </Button>
         <DrawerSearch value={searchTerm} onChange={setSearchTerm} />
-        <RecipeList
-          recipes={
-            searchTerm ? filteredRecipes : (PAGES as PageWithParentLabel)
-          }
-          onNavigate={handleNavigate}
-        />
+        <RecipeList recipes={pages} onNavigate={handleNavigate} />
         <LangSelector />
       </Drawer>
       <GlobalDialog
