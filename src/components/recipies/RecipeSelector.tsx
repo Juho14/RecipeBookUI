@@ -1,8 +1,8 @@
 import { List, ListItemButton, ListItemText } from '@mui/material'
 import { RECIPE_LIST } from '../../constants/Data/Recipies/RecipeList'
-import type { Recipe } from '../../types/Recipe/Recipe'
+import type { AnyRecipe } from '../../types/Recipe/Recipe'
 import { useDispatch } from 'react-redux'
-import { setActiveRecipe } from '../../store/recipeSlice'
+import { setActiveRecipe } from '../../store/recipe/recipeSlice'
 import { useNavigate } from 'react-router-dom'
 
 interface RecipeSelectorProps {
@@ -12,7 +12,7 @@ interface RecipeSelectorProps {
 const RecipeSelector = ({ onClose }: RecipeSelectorProps) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleSelectRecipe = (recipe: Recipe) => {
+  const handleSelectRecipe = (recipe: AnyRecipe) => {
     dispatch(setActiveRecipe(recipe))
     navigate(`recipes/${recipe.slug}`)
     onClose()

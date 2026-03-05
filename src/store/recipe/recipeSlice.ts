@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { AnyRecipe, Recipe } from '../types/Recipe/Recipe'
+import type { AnyRecipe, Recipe } from '../../types/Recipe/Recipe'
 
 interface RecipeState {
   data: Recipe[]
@@ -8,7 +8,7 @@ interface RecipeState {
   activeRecipe: AnyRecipe | null
 }
 
-const initialState: RecipeState = {
+export const recipeInitialState: RecipeState = {
   data: [],
   status: 'idle',
   error: undefined,
@@ -17,7 +17,7 @@ const initialState: RecipeState = {
 
 export const recipeSlice = createSlice({
   name: 'recipe',
-  initialState,
+  initialState: recipeInitialState,
   reducers: {
     getRecipes: () => {},
     getRecipesSuccess: (state, action: PayloadAction<Recipe[]>) => {

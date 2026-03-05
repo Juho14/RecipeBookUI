@@ -5,12 +5,10 @@ export interface RecipeLookup {
 }
 
 export const getRecipeFromParams = (
-  params: { category?: string; recipe?: string; id?: string },
+  params: { category?: string; recipe?: string; id?: number },
   lookup: RecipeLookup
 ) => {
-  if (params.id) {
-    return lookup[params.id]
-  } else if (params.category && params.recipe) {
+  if (params.category && params.recipe) {
     const key = `/${params.category}/${params.recipe}`.toLowerCase()
     return lookup[key]
   }

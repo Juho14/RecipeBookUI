@@ -1,7 +1,9 @@
 import type { CookingUnit } from '../ingredients/CookingUnit'
 import type { Ingredient } from '../ingredients/Ingredient'
+import type { Macros } from '../ingredients/Macros'
 
 export type RecipeIngredient = {
+  name: string
   ingredient: Ingredient
   // represents grams, used for calculation
   grams: number
@@ -13,8 +15,8 @@ export type RecipeIngredient = {
 }
 
 export type RecipeProcessStep = {
-  en: string // Required English step
-  fi?: string // Optional Finnish step
+  description: string // Required English step
+  descriptionFi?: string // Optional Finnish step
 }
 
 export type BaseRecipe = {
@@ -23,7 +25,7 @@ export type BaseRecipe = {
   imgPath?: string
   ingredients: RecipeIngredient[]
   time: string
-  process: RecipeProcessStep[]
+  steps: RecipeProcessStep[]
   servings: number
 }
 
@@ -34,17 +36,18 @@ export type Recipe = {
   imgPath?: string
   ingredients: RecipeIngredient[]
   time: string
-  process: RecipeProcessStep[]
+  steps: RecipeProcessStep[]
   servings: number
+  macros: Macros
 }
 
-export type AnyRecipe = BaseRecipe | Recipe;
+export type AnyRecipe = BaseRecipe | Recipe
 
 export type RecipeCategory = {
-  id: number,
+  id: number
   name: string
 }
 export type GroupedRecipes = {
-  category: RecipeCategory,
+  category: RecipeCategory
   recipes: Recipe[]
 }

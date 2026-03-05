@@ -1,5 +1,5 @@
 import { setRecipeNavMap } from '../store/recipeNavSlice'
-import { getRecipeDetailsSuccess, getRecipesSuccess } from '../store/recipeSlice'
+import { getRecipeDetailsSuccess, getRecipesSuccess } from '../store/recipe/recipeSlice'
 import type { GroupedRecipes, Recipe } from '../types/Recipe/Recipe'
 import {
   flattenRecipes,

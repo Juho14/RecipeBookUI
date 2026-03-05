@@ -2,7 +2,7 @@ import { Button, Grid } from '@mui/material'
 
 import type { Recipe } from '../../../types/Recipe/Recipe'
 import type { RecipeIngredient } from '../../../types/Recipe/Recipe'
-import { addRecipe } from '../../../store/recipeSlice'
+import { addRecipe } from '../../../store/recipe/recipeSlice'
 
 import { type DefaultValues } from 'react-hook-form'
 import { Form, useForm } from '../../form'
@@ -15,6 +15,7 @@ import { fetchIngredients } from '../../../fetches/ingredients'
 import { useAppDispatch } from '../../../store/hooks'
 
 const defaultIngredient: RecipeIngredient = {
+  name: '',
   ingredient: {} as Ingredient,
   grams: 0,
   cookingUnit: 'g'
@@ -28,7 +29,7 @@ const defaultValues: DefaultValues<Recipe> = {
   time: '',
   servings: 1,
   ingredients: [defaultIngredient],
-  process: [{ en: '' }]
+  steps: [{ en: '' }]
 }
 
 const RecipeForm = () => {

@@ -10,21 +10,23 @@ export const TEST_RECIPE: BaseRecipe = {
   ingredients: [
     {
       ingredient: INGREDIENTS.CHICKEN_STRIPS,
+      name: INGREDIENTS.CHICKEN_STRIPS.name,
       grams: 600,
       cookingUnit: 'g',
       amount: 0
     },
     {
       ingredient: INGREDIENTS.OLIVE_OIL,
+      name: INGREDIENTS.OLIVE_OIL.name,
       grams: 313.95,
       cookingUnit: 'tbsp',
       amount: 23
     }
   ],
-  process: [
+  steps: [
     {
-      en: '23',
-      fi: 'asdf'
+      description: '23',
+      descriptionFi: 'asdf'
     }
   ]
 }

@@ -5,20 +5,17 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { useSelector } from 'react-redux'
-import type { RootState } from '../../../store'
-import { calculateMacros } from '../../../utils/nutrients/MacroCalculator'
 import { MACRO_SCHEMA } from '../../../types/ingredients/MacroSchema'
 import NumericMacroRow from './NumericMacroRow'
 import ObjectMacroRow from './ObjectMacroRow'
+import type { AnyRecipe } from '../../../types/Recipe/Recipe'
+import { useMacros } from '../../../hooks/macros/useMacros'
 
-const Nutrients = () => {
-  const recipe = useSelector((state: RootState) => state.recipe.activeRecipe)
-  if (!recipe) return <p>No recipe selected</p>
+const Nutrients = ({ recipe }: { recipe: AnyRecipe }) => {
+  const macros = useMacros(recipe)
+  if (!recipe || !macros) return <p>No recipe selected</p>
 
-  const { total, perServing } = calculateMacros(recipe)
-
-  console.log(total)
+  const { totalMacros, perServingMacros } = macros
 
   return (
     <TableContainer component={Paper}>
@@ -38,8 +35,8 @@ const Nutrients = () => {
                 <NumericMacroRow
                   key={macro.key}
                   label={macro.label}
-                  total={total[macro.key]}
-                  perServing={perServing[macro.key]}
+                  total={totalMacros[macro.key]}
+                  perServing={perServingMacros[macro.key]}
                 />
               )
             }
@@ -48,8 +45,8 @@ const Nutrients = () => {
               <ObjectMacroRow
                 key={macro.key}
                 label={macro.label}
-                total={total[macro.key]}
-                perServing={perServing[macro.key]}
+                total={totalMacros[macro.key]}
+                perServing={perServingMacros[macro.key]}
               />
             )
           })}

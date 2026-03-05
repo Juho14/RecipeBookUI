@@ -12,11 +12,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import type { RootState } from '../../store'
-import type { RecipeProcessStep } from '../../types/Recipe/Recipe'
+import type { AnyRecipe, RecipeProcessStep } from '../../types/Recipe/Recipe'
 import { LANG } from '../../types/ui/Lang'
 
-const CookingProcess = () => {
-  const recipe = useSelector((state: RootState) => state.recipe.activeRecipe)
+const CookingProcess = ({ recipe }: { recipe: AnyRecipe }) => {
   const lang = useSelector((state: RootState) => state.lang.current)
   const [toggledSteps, setToggledSteps] = useState<Set<number>>(new Set())
 
@@ -25,7 +24,7 @@ const CookingProcess = () => {
   }
 
   const completedSteps = recipe
-    ? recipe.process.map((_, i) => toggledSteps.has(i))
+    ? recipe.steps.map((_, i) => toggledSteps.has(i))
     : []
 
   const toggleStep = (index: number) => {
@@ -37,7 +36,9 @@ const CookingProcess = () => {
     })
   }
   const getTranslatedStep = (step: RecipeProcessStep) => {
-    return lang === LANG.FI ? step.fi || step.en : step.en
+    return lang === LANG.FI
+      ? step.descriptionFi || step.description
+      : step.description
   }
 
   return (
@@ -48,7 +49,7 @@ const CookingProcess = () => {
 
       <AccordionDetails>
         <List>
-          {recipe.process.map((step, index) => (
+          {recipe.steps.map((step, index) => (
             <ListItem
               key={index}
               disablePadding

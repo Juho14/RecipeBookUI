@@ -3,11 +3,11 @@ import {
   objectMacroKeys,
   type Macros
 } from '../../types/ingredients/Macros'
-import type { Recipe } from '../../types/Recipe/Recipe'
+import type { AnyRecipe, BaseRecipe } from '../../types/Recipe/Recipe'
 import { addNestedMacros, splitNestedMacros } from './NestedMacros'
 import { roundMacros } from './RoundMacros'
 
-export const calculateMacros = (recipe: Recipe) => {
+export const calculateMacros = (recipe: BaseRecipe) => {
   const total: Macros = {
     kcal: 0,
     fats: { total: 0, saturated: 0 },
@@ -16,7 +16,6 @@ export const calculateMacros = (recipe: Recipe) => {
     salt: 0,
     fiber: 0
   }
-
   // 1️⃣ Calculate total macros
   for (const { ingredient, grams } of recipe.ingredients) {
     const factor = grams / 100
@@ -33,6 +32,13 @@ export const calculateMacros = (recipe: Recipe) => {
     })
   }
 
+  return roundMacros(total)
+}
+
+export const calculateMacrosPerServing = (
+  total: Macros,
+  recipe: AnyRecipe
+): Macros => {
   const perServing: Macros = {
     kcal: total.kcal,
     fats: { ...total.fats },
@@ -49,9 +55,5 @@ export const calculateMacros = (recipe: Recipe) => {
   numericMacroKeys.forEach((key) => {
     perServing[key] /= recipe.servings
   })
-
-  return {
-    total: roundMacros(total),
-    perServing: roundMacros(perServing)
-  }
+  return roundMacros(perServing)
 }

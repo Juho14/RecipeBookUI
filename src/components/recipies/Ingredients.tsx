@@ -5,34 +5,33 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography,
+  Typography
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { useSelector } from 'react-redux'
-import type { RootState } from '../../store'
+import { Fragment } from 'react/jsx-runtime'
+import type { AnyRecipe } from '../../types/Recipe/Recipe'
 
-const Ingredients = () => {
-  const recipe = useSelector((state: RootState) => state.recipe.activeRecipe)
+const Ingredients = ({ recipe }: { recipe: AnyRecipe }) => {
   if (!recipe) return null
 
   return (
     <Accordion defaultExpanded>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h6">Ingredients</Typography>
+        <Typography variant='h6'>Ingredients</Typography>
       </AccordionSummary>
 
       <AccordionDetails>
         <List>
-          {recipe.ingredients.map(
-            ({ ingredient, grams, amount, cookingUnit }) => (
-              <ListItem key={ingredient.name} disablePadding>
+          {recipe.ingredients.map((item, index) => (
+            <Fragment key={index}>
+              <ListItem disablePadding>
                 <ListItemText
-                  primary={ingredient.name}
-                  secondary={`${amount ?? grams} ${cookingUnit}`}
+                  primary={item.name}
+                  secondary={`${item.amount ?? item.grams} ${item.cookingUnit}`}
                 />
               </ListItem>
-            )
-          )}
+            </Fragment>
+          ))}
         </List>
       </AccordionDetails>
     </Accordion>

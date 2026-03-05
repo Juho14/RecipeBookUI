@@ -8,34 +8,49 @@ export const HOISIN_CHICKEN: BaseRecipe = {
   servings: 3,
   time: '30 mins',
   ingredients: [
-    { ingredient: INGREDIENTS.CHICKEN_STRIPS, grams: 600, cookingUnit: 'g' },
+    {
+      ingredient: INGREDIENTS.CHICKEN_STRIPS,
+      name: INGREDIENTS.CHICKEN_STRIPS.name,
+      grams: 600,
+      cookingUnit: 'g'
+    },
     {
       ingredient: INGREDIENTS.OLIVE_OIL,
+      name: INGREDIENTS.OLIVE_OIL.name,
       grams: 15,
       cookingUnit: 'tbsp',
       amount: 1
     },
-    { ingredient: INGREDIENTS.SUGAR, grams: 10, cookingUnit: 'g' },
+    {
+      ingredient: INGREDIENTS.SUGAR,
+      name: INGREDIENTS.SUGAR.name,
+      grams: 10,
+      cookingUnit: 'g'
+    },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
+      name: INGREDIENTS.JASMIN_RICE.name,
+
       grams: 240,
       cookingUnit: 'dl',
       amount: 2.5
     },
     {
       ingredient: INGREDIENTS.HOISIN_SAUCE,
+      name: INGREDIENTS.HOISIN_SAUCE.name,
+
       grams: 104,
       cookingUnit: 'tbsp',
       amount: 6
     }
   ],
-  process: [
-    { en: 'Preheat oven to 200°C (390°F).' },
-    { en: 'Mix hoisin sauce with olive oil and sugar to make a glaze.' },
+  steps: [
+    { description: 'Preheat oven to 200°C (390°F).' },
+    { description: 'Mix hoisin sauce with olive oil and sugar to make a glaze.' },
     {
-      en: 'Coat the chicken breasts in the glaze and let marinate for 10 minutes.'
+      description: 'Coat the chicken breasts in the glaze and let marinate for 10 minutes.'
     },
-    { en: 'Bake chicken for 20 minutes until cooked through.' },
-    { en: 'Serve hot with steamed vegetables or rice.' }
+    { description: 'Bake chicken for 20 minutes until cooked through.' },
+    { description: 'Serve hot with steamed vegetables or rice.' }
   ]
 }

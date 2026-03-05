@@ -1,9 +1,6 @@
-import { useSelector } from 'react-redux'
-import type { RootState } from '../../store'
+import type { AnyRecipe } from '../../types/Recipe/Recipe'
 
-const Header = () => {
-  const recipe = useSelector((state: RootState) => state.recipe.activeRecipe)
-
+const Header = ({ recipe }: { recipe: AnyRecipe }) => {
   if (!recipe) return null
 
   return (

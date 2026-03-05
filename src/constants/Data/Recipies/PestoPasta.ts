@@ -8,29 +8,41 @@ export const PESTO_PASTA: BaseRecipe = {
   servings: 2,
   time: '25 mins',
   ingredients: [
-    { ingredient: INGREDIENTS.TOMATO, grams: 200, cookingUnit: 'g' },
+    {
+      ingredient: INGREDIENTS.TOMATO,
+      name: INGREDIENTS.TOMATO.name,
+      grams: 200,
+      cookingUnit: 'g'
+    },
     {
       ingredient: INGREDIENTS.OLIVE_OIL,
+      name: INGREDIENTS.OLIVE_OIL.name,
       grams: 20,
       cookingUnit: 'tbsp',
       amount: 1.5
     },
-    { ingredient: INGREDIENTS.SUGAR, grams: 5, cookingUnit: 'g' },
+    {
+      ingredient: INGREDIENTS.SUGAR,
+      name: INGREDIENTS.SUGAR.name,
+      grams: 5,
+      cookingUnit: 'g'
+    },
     {
       ingredient: INGREDIENTS.JASMIN_RICE,
+      name: INGREDIENTS.JASMIN_RICE.name,
       grams: 180,
       cookingUnit: 'dl',
       amount: 2
     }
   ],
-  process: [
-    { en: 'Cook the rice according to package instructions.' },
+  steps: [
+    { description: 'Cook the rice according to package instructions.' },
     {
-      en: 'Mix olive oil with chopped tomatoes and sugar to create a simple sauce.'
+      description: 'Mix olive oil with chopped tomatoes and sugar to create a simple sauce.'
     },
     {
-      en: 'Combine the cooked rice with the sauce and stir in pesto (optional).'
+      description: 'Combine the cooked rice with the sauce and stir in pesto (optional).'
     },
-    { en: 'Serve hot with grated parmesan or fresh basil.' }
+    { description: 'Serve hot with grated parmesan or fresh basil.' }
   ]
 }
