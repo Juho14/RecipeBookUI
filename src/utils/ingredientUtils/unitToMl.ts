@@ -1,4 +1,4 @@
-import type { CookingUnit } from '../../types/ingredients/CookingUnit'
+import { CookingUnits, type CookingUnit } from "../../constants/Recipes/cookingUnit"
 
 const TBSP_TO_ML = 15
 const TSP_TO_ML = 5
@@ -6,17 +6,16 @@ const DL_TO_ML = 100
 const L_TO_ML = 1000
 
 export function unitToMl(grams: number, cookingUnit: CookingUnit): number {
-    console.log(cookingUnit)
   switch (cookingUnit) {
-    case 'ml':
+    case CookingUnits.MILLILITER:
       return grams
-    case 'tbsp':
+    case CookingUnits.TABLESPOON:
       return grams * TBSP_TO_ML
-    case 'tsp':
+    case CookingUnits.TEASPOON:
       return grams * TSP_TO_ML
-    case 'dl':
+    case CookingUnits.DECILITER:
       return grams * DL_TO_ML
-    case 'l':
+    case CookingUnits.LITER:
       return grams * L_TO_ML
     default:
       throw new Error('Not a volume unit')

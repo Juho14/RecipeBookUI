@@ -1,54 +1,27 @@
 import { Button, Drawer, IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  mergePages,
-  PAGES,
-  type PageWithParentLabel
-} from '../../types/navigation/PageConfig'
-import DrawerSearch from './DrawerSearch'
-import RecipeList from './RecipeList'
-import GlobalDialog from '../dialog/GlobalDialog'
-import RecipeSelector from '../../components/recipies/RecipeSelector'
-import LangSelector from './LangSelector'
-import { useAppSelector } from '../../store/hooks'
-import { selectRecipePages } from '../../utils/recipeUtils/selectRecipePages'
+import { mergePages } from '../types/PageConfig'
+import DrawerSearch from '../DrawerSearch'
+import GlobalDialog from '../../dialog/GlobalDialog'
+import RecipeSelector from '../../../components/recipies/RecipeSelector'
+import LangSelector from '../LangSelector'
+import { useAppSelector } from '../../../store/hooks'
+import { selectRecipePages } from '../../../utils/recipeUtils/selectRecipePages'
+import NavItems from './NavItems'
 
 const DrawerNav = () => {
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
   const recipePages = useAppSelector(selectRecipePages)
-  const pages = mergePages(PAGES, recipePages)
+  const pages = mergePages(recipePages)
 
   const handleNavigate = (path: string) => {
     navigate(path)
     setOpen(false)
   }
-
-  const allRecipePages = useMemo(() => {
-    return PAGES.flatMap((page) => {
-      if ('children' in page && page.isParent) {
-        return page.children.map((child) => ({
-          ...child,
-          parentLabel: page.label
-        }))
-      }
-      return []
-    })
-  }, [])
-
-  const filteredRecipes = useMemo(() => {
-    if (!searchTerm) return allRecipePages
-    const term = searchTerm.toLowerCase()
-    return allRecipePages.filter(
-      (recipe) =>
-        recipe.label.toLowerCase().includes(term) ||
-        recipe.path.toLowerCase().includes(term) ||
-        recipe.parentLabel?.toLowerCase().includes(term)
-    )
-  }, [searchTerm, allRecipePages])
 
   const [showRecipeDialog, setShowRecipeDialog] = useState(false)
 
@@ -78,7 +51,7 @@ const DrawerNav = () => {
           All recipies
         </Button>
         <DrawerSearch value={searchTerm} onChange={setSearchTerm} />
-        <RecipeList recipes={pages} onNavigate={handleNavigate} />
+        <NavItems pages={pages} onNavigate={handleNavigate} />
         <LangSelector />
       </Drawer>
       <GlobalDialog

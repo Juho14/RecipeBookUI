@@ -1,13 +1,15 @@
+import type { Ingredient } from '../../types/ingredients/Ingredient'
 import {
   numericMacroKeys,
   objectMacroKeys,
   type Macros
 } from '../../types/ingredients/Macros'
-import type { AnyRecipe, BaseRecipe } from '../../types/Recipe/Recipe'
+import type { Recipe } from '../../types/Recipe/Recipe'
+import { getIngredientById } from '../ingredientUtils/getIngredientById'
 import { addNestedMacros, splitNestedMacros } from './NestedMacros'
 import { roundMacros } from './RoundMacros'
 
-export const calculateMacros = (recipe: BaseRecipe) => {
+export const calculateMacros = (recipe: Recipe, ingredients: Ingredient[]) => {
   const total: Macros = {
     kcal: 0,
     fats: { total: 0, saturated: 0 },
@@ -17,7 +19,9 @@ export const calculateMacros = (recipe: BaseRecipe) => {
     fiber: 0
   }
   // 1️⃣ Calculate total macros
-  for (const { ingredient, grams } of recipe.ingredients) {
+  for (const { ingredientId, grams } of recipe.ingredients) {
+
+    const ingredient = getIngredientById(ingredients, ingredientId)
     const factor = grams / 100
     // const factor = 1
 
@@ -37,8 +41,9 @@ export const calculateMacros = (recipe: BaseRecipe) => {
 
 export const calculateMacrosPerServing = (
   total: Macros,
-  recipe: AnyRecipe
+  recipe: Recipe
 ): Macros => {
+  if (!recipe.id) return total
   const perServing: Macros = {
     kcal: total.kcal,
     fats: { ...total.fats },

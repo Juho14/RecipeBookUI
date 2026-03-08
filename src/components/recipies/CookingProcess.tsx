@@ -12,15 +12,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import type { RootState } from '../../store'
-import type { AnyRecipe, RecipeProcessStep } from '../../types/Recipe/Recipe'
+import type { Recipe, RecipeProcessStep } from '../../types/Recipe/Recipe'
 import { LANG } from '../../types/ui/Lang'
 
-const CookingProcess = ({ recipe }: { recipe: AnyRecipe }) => {
+const CookingProcess = ({ recipe }: { recipe: Recipe }) => {
   const lang = useSelector((state: RootState) => state.lang.current)
   const [toggledSteps, setToggledSteps] = useState<Set<number>>(new Set())
 
-  if (!recipe) {
-    return <p>No recipe selected</p>
+  if (!recipe.steps?.length) {
+    return <p>No steps available</p>
   }
 
   const completedSteps = recipe

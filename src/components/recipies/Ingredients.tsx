@@ -9,10 +9,12 @@ import {
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Fragment } from 'react/jsx-runtime'
-import type { AnyRecipe } from '../../types/Recipe/Recipe'
+import type { Recipe } from '../../types/Recipe/Recipe'
 
-const Ingredients = ({ recipe }: { recipe: AnyRecipe }) => {
-  if (!recipe) return null
+const Ingredients = ({ recipe }: { recipe: Recipe }) => {
+  if (!recipe.ingredients?.length) {
+    return <p>No ingredients available</p>
+  }
 
   return (
     <Accordion defaultExpanded>

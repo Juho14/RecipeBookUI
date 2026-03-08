@@ -1,14 +1,15 @@
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Button, Grid } from '@mui/material'
-import { RECIPE_LIST } from '../../../constants/Data/Recipies/RecipeList'
 import CheckboxInput from '../../form/inputs/Checkbox'
 import type { Recipe } from '../../../types/Recipe/Recipe'
 import type { ShoppingListForm } from '../../../types/shoppingList/ShoppingListForm'
+import { useAppSelector } from '../../../store/hooks'
 
 interface AddRecipeDialogProps {
   onClose: () => void
 }
 const AddRecipeDialog = ({ onClose }: AddRecipeDialogProps) => {
+  const recipes = useAppSelector((state) => state.recipe.data)
   const { control } = useFormContext<ShoppingListForm>()
   const {
     fields: recipeList,
@@ -34,7 +35,7 @@ const AddRecipeDialog = ({ onClose }: AddRecipeDialogProps) => {
 
   return (
     <Grid container spacing={2} maxWidth={500} justifySelf='center'>
-      {RECIPE_LIST.map((recipe) => {
+      {recipes.map((recipe) => {
         const isChecked = recipeList.some((r) => r.id === recipe.id)
         return (
           <Grid

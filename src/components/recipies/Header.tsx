@@ -1,6 +1,6 @@
-import type { AnyRecipe } from '../../types/Recipe/Recipe'
+import type { Recipe } from '../../types/Recipe/Recipe'
 
-const Header = ({ recipe }: { recipe: AnyRecipe }) => {
+const Header = ({ recipe }: { recipe: Recipe }) => {
   if (!recipe) return null
 
   return (

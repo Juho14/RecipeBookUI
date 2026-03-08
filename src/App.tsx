@@ -13,8 +13,7 @@ export const App = () => {
         {/* Wrap all pages inside Layout */}
         <Route element={<Layout />}>
           <Route path='/' element={<FrontPage />} />
-          <Route path='/recipes/:param1/:param2' element={<Recipes />} />
-          <Route path='/recipes/:param1' element={<Recipes />} />{' '}
+          <Route path='/recipes/:id' element={<Recipes />} />
           <Route path='/add-ingredient' element={<IngredientsForm />} />
           <Route path='/add-recipe' element={<RecipeForm />} />
           <Route path='/shopping-list' element={<ShoppingList />} />

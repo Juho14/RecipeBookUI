@@ -3,22 +3,22 @@ import Selector from '../../form/inputs/Selector'
 import TextInput from '../../form/inputs/TextInput'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
-import { INGREDIENTS } from '../../../constants/Data/Ingredients/Ingredients'
 import type { SelectOption } from '../../../types/form/SelectOption'
 import AddIcon from '@mui/icons-material/Add'
-import type { RecipeIngredient } from '../../../types/Recipe/Recipe'
+import type { FormRecipeIngredient } from '../../../types/Recipe/Recipe'
 import { useTranslation } from 'react-i18next'
-import {
-  COOKING_UNITS,
-  type CookingUnit
-} from '../../../types/ingredients/CookingUnit'
 import { amountToGrams } from '../../../utils/ingredientUtils/amountToGrams'
 import { getIngredientById } from '../../../utils/ingredientUtils/getIngredientById'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../../store'
+import {
+  cookingUnitOptions,
+  CookingUnits
+} from '../../../constants/Recipes/cookingUnit'
+import { getIngredientFlags } from '../../../utils/ingredientUtils/getIngredientFlags'
 
 interface IngredientFieldsProps {
-  defaultIngredient: RecipeIngredient
+  defaultIngredient: FormRecipeIngredient
 }
 
 const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
@@ -41,7 +41,8 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
   })
 
   const ingredients = useSelector((state: RootState) => state.ingredients.data)
-  console.log(ingredients)
+  if (ingredients?.length === 0) return null
+
   const ingredientOptions: SelectOption<number>[] = ingredients.map(
     (ingredient) => ({
       value: ingredient.id,
@@ -50,26 +51,22 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
     })
   )
 
-  const cookingUnitOptions: SelectOption<CookingUnit>[] = COOKING_UNITS.map(
-    (unit) => ({
-      value: unit,
-      label: t(`cookingUnit.${unit}`)
-    })
-  )
-
   const resetCookingUnit = (index: number) => {
     setValue(`ingredients.${index}.amount`, '')
-    setValue(`ingredients.${index}.cookingUnit`, 'g')
+    setValue(`ingredients.${index}.cookingUnit`, CookingUnits.GRAM)
   }
 
   const handleIngredientChange = (index: number, value: number) => {
-    const ingredient = getIngredientById(value)
+    const ingredient = getIngredientById(ingredients, value)
     if (!ingredient?.density) resetCookingUnit(index)
   }
 
   const handleMeasureChange = (index: number) => {
     const ingredient = getValues(`ingredients.${index}`)
-    setValue(`ingredients.${index}.grams`, amountToGrams(ingredient))
+    setValue(
+      `ingredients.${index}.grams`,
+      amountToGrams(ingredients, ingredient)
+    )
   }
 
   return (
@@ -80,14 +77,10 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
 
       {ingredientFields.map((field, index) => {
         const ingredientField = ingredientsWatch[index] || {}
-        const ingredientId = ingredientField.ingredient?.id
-        const cookingUnit = ingredientField.cookingUnit
-        const selectedIngredient = ingredientId
-          ? getIngredientById(ingredientId)
-          : null
-        const hasDensity = !!selectedIngredient?.density
-
-        const showAmount = hasDensity && cookingUnit !== 'g'
+        const { isLiquid, showAmount } = getIngredientFlags(
+          ingredientField,
+          ingredients
+        )
 
         return (
           <Grid
@@ -99,7 +92,7 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
           >
             <Grid size={{ xs: 11 }}>
               <Selector
-                name={`ingredients.${index}.ingredient.id`}
+                name={`ingredients.${index}.ingredientId`}
                 label={t('recipies.ingredient')}
                 options={ingredientOptions}
                 onChange={(value) => handleIngredientChange(index, value)}
@@ -112,13 +105,13 @@ const IngredientFields = ({ defaultIngredient }: IngredientFieldsProps) => {
               </IconButton>
             </Grid>
 
-            {hasDensity && (
+            {isLiquid && (
               <Grid size={{ xs: 11 }}>
                 <Selector
                   name={`ingredients.${index}.cookingUnit`}
                   label={t('recipies.cookingUnit')}
-                  options={cookingUnitOptions}
-                  required={hasDensity}
+                  options={cookingUnitOptions(t)}
+                  required={isLiquid}
                 />
               </Grid>
             )}

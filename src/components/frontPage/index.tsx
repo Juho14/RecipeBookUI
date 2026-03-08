@@ -1,19 +1,9 @@
 import { Grid } from '@mui/material'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { fetchGroupedRecipes } from '../../fetches/recipes'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import type { RootState } from '../../store'
 
 const FrontPage = () => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(fetchGroupedRecipes())
-  }, [])
-  const recipes = useAppSelector((state: RootState) => state.recipe.data)
-  console.log(recipes)
   return (
     <Grid container spacing={2} justifyContent={'center'} textAlign={'center'}>
       <Grid size={{ xs: 12 }}>

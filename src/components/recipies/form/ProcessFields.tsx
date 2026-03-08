@@ -30,7 +30,7 @@ const ProcessFields = () => {
           <Box display='flex'>
             <Grid size={{ xs: 12 }}>
               <TextInput
-                name={`process.${index}.en`}
+                name={`process.${index}.description`}
                 label={`Step ${index + 1}`}
                 required
               />
@@ -43,7 +43,7 @@ const ProcessFields = () => {
           </Box>
           <Grid size={{ xs: 12 }}>
             <TextInput
-              name={`process.${index}.fi`}
+              name={`process.${index}.descriptionFi`}
               label={`Vaihe ${index + 1}`}
             />
           </Grid>
@@ -52,7 +52,7 @@ const ProcessFields = () => {
       <Grid size={{ xs: 12 }}>
         <Button
           startIcon={<AddIcon />}
-          onClick={() => appendProcess({ en: '' })}
+          onClick={() => appendProcess({ description: '' })}
         >
           Add Step
         </Button>

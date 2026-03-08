@@ -10,6 +10,6 @@ export type Ingredient = {
   type: IngredientTypeId
 }
 
-export type FormIngredient = Omit<Ingredient, 'id'> & {
-  id?: IngredientTypeId
+export type FormIngredient = Omit<Ingredient, 'ingredientId'> & {
+  ingredientId?: IngredientTypeId
 }

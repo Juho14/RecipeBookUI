@@ -1,11 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { AnyRecipe, Recipe } from '../../types/Recipe/Recipe'
+import type { Recipe } from '../../types/Recipe/Recipe'
 
 interface RecipeState {
   data: Recipe[]
   status: 'idle'
   error: undefined
-  activeRecipe: AnyRecipe | null
+  activeRecipe: Recipe | null
 }
 
 export const recipeInitialState: RecipeState = {
@@ -23,14 +23,13 @@ export const recipeSlice = createSlice({
     getRecipesSuccess: (state, action: PayloadAction<Recipe[]>) => {
       state.data = action.payload
     },
-    addRecipe: (state, action: PayloadAction<Recipe>) => {},
     addRecipeSuccess: (state, action: PayloadAction<Recipe>) => {
       state.data.push(action.payload)
     },
     getRecipeDetailsSuccess: (state, action: PayloadAction<Recipe>) => {
       state.activeRecipe = action.payload
     },
-    setActiveRecipe: (state, action: PayloadAction<AnyRecipe>) => {
+    setActiveRecipe: (state, action: PayloadAction<Recipe>) => {
       state.activeRecipe = action.payload
     },
     clearActiveRecipe: (state) => {
@@ -42,7 +41,6 @@ export const recipeSlice = createSlice({
 export const {
   getRecipes,
   getRecipesSuccess,
-  addRecipe,
   addRecipeSuccess,
   getRecipeDetailsSuccess,
   setActiveRecipe,

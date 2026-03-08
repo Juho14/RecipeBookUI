@@ -1,5 +1,12 @@
-import { INGREDIENTS } from '../../constants/Data/Ingredients/Ingredients'
 import type { Ingredient } from '../../types/ingredients/Ingredient'
 
-export const getIngredientById = (id: number): Ingredient | undefined =>
-  Object.values(INGREDIENTS).find((ing) => ing.id === id)
+export const getIngredientById = (
+  ingredients: Ingredient[],
+  id: number
+): Ingredient => {
+  const ingredient = ingredients.find((ing) => ing.id === id)
+  if (!ingredient) {
+    throw new Error(`Ingredient with id ${id} not found`)
+  }
+  return ingredient
+}

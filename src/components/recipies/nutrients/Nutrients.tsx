@@ -8,13 +8,15 @@ import Paper from '@mui/material/Paper'
 import { MACRO_SCHEMA } from '../../../types/ingredients/MacroSchema'
 import NumericMacroRow from './NumericMacroRow'
 import ObjectMacroRow from './ObjectMacroRow'
-import type { AnyRecipe } from '../../../types/Recipe/Recipe'
+import type { Recipe } from '../../../types/Recipe/Recipe'
 import { useMacros } from '../../../hooks/macros/useMacros'
 
-const Nutrients = ({ recipe }: { recipe: AnyRecipe }) => {
-  const macros = useMacros(recipe)
-  if (!recipe || !macros) return <p>No recipe selected</p>
+const Nutrients = ({ recipe }: { recipe: Recipe }) => {
+  if (!recipe.ingredients?.length) return <p>No ingredients available</p>
 
+  const macros = useMacros(recipe)
+
+  if (!macros) return <p>Calculating macros...</p>
   const { totalMacros, perServingMacros } = macros
 
   return (
