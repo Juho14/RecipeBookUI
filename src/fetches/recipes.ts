@@ -8,6 +8,7 @@ import {
 import { fetchData } from './fetchData'
 import { createFetchPipelineThunk } from './fetchPipeline'
 import { fetchIngredients } from './ingredients'
+import type { IngredientsForRecipeDTO } from '../types/Recipe/RecipeIngredient'
 
 export const fetchRecipes = createFetchPipelineThunk<Recipe[], void>({
   selectStatus: (state) => state.recipe.status,
@@ -46,4 +47,9 @@ export const addRecipe = createFetchPipelineThunk<void, Recipe>({
   selectStatus: (state) => state.ingredients.status,
   apiCall: (payload) => fetchData<void>('/recipes', 'POST', payload),
   successAction: () => fetchIngredients()
+})
+
+export const fetchIngredientsForRecipes = createFetchPipelineThunk<IngredientsForRecipeDTO[], number[]>({
+  selectStatus: (state) => state.recipe.status,
+  apiCall: (payload) => fetchData(`/recipes/ingredients?${payload.map((id) => `recipeId=${id}`).join('&')}`)
 })

@@ -1,4 +1,5 @@
 import type { TFunction } from 'i18next'
+import { cookingUnitToString } from '../../utils/ingredientUtils/cookingUnitConversions'
 
 export const CookingUnits = {
   GRAM: 1,
@@ -13,6 +14,6 @@ export type CookingUnit = (typeof CookingUnits)[keyof typeof CookingUnits]
 
 export const cookingUnitOptions = (t: TFunction<'translation', undefined>) =>
   Object.values(CookingUnits).map((unit) => ({
-    label: t(`cookingUnit.${unit}`),
+    label: t(`cookingUnits.${cookingUnitToString(unit)}`),
     value: unit
   }))

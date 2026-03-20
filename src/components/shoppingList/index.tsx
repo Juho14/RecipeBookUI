@@ -5,10 +5,16 @@ import type { ShoppingListForm } from '../../types/shoppingList/ShoppingListForm
 import AddManualIngredient from './manualItems/AddManualIngredient'
 import SummarisedList from './summary/SummarisedList'
 import AddManualItem from './manualItems/AddManualItem'
+import DateInput from '../form/inputs/DateInput'
+import { flattenShoppingListForm } from '../../utils/shoppingListUtils/flattenShoppingListForm'
+import { useAppDispatch } from '../../store/hooks'
+import { upsertShoppingList } from '../../fetches/shoppingList'
 
 const defaultValues: ShoppingListForm = {
+  date: new Date(),
   selectedRecipies: [],
   selectedIngredients: [],
+  recipeIngredients: [],
   manualItems: []
 }
 
@@ -32,19 +38,29 @@ const ShoppingList = () => {
   // Below list of external ingredients (name, amount, unit, checked(later))
   // Macro summary (behind a toggle)
 
-  const onSubmit = (data: ShoppingListForm) => {
+  const dispatch = useAppDispatch()
+  const onSubmit = async (data: ShoppingListForm) => {
     console.log(data)
+    const mappedData = flattenShoppingListForm(data)
+    dispatch(upsertShoppingList(mappedData))
+    const result = await dispatch(upsertShoppingList(mappedData)).unwrap()
+    console.log(mappedData)
+    reset(result)
   }
 
   const form = useForm<ShoppingListForm>({
     defaultValues,
     onSubmit
   })
+  const { reset } = form
 
   return (
     <Form form={form}>
       <Grid container spacing={2} maxWidth={500} justifySelf={'center'}>
         <div>Shopping list component</div>
+        <Grid size={{ xs: 12 }}>
+          <DateInput name='date' label='Date' defaultValue={new Date()} />
+        </Grid>
         <Grid size={{ xs: 12 }}>
           <Box>Automatically add ingredients of recipies</Box>
           <AddRecipeToList />

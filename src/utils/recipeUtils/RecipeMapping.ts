@@ -1,4 +1,4 @@
-import type { RecipeNavMap } from '../../types/navigation/RecipeNavMap'
+import type { RecipeNavMap } from '../../layout/navigation/types/RecipeNavMap'
 import type { GroupedRecipes, Recipe } from '../../types/Recipe/Recipe'
 
 export const mapGroupedRecipesToNav = (grouped: GroupedRecipes[]): RecipeNavMap => {

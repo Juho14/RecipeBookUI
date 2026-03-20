@@ -5,12 +5,17 @@ import { GlobalSEO } from '../components/seo/GlobalSEO'
 import { useAppDispatch } from '../store/hooks'
 import { useEffect } from 'react'
 import { fetchGroupedRecipes } from '../fetches/recipes'
+import { fetchIngredients } from '../fetches/ingredients'
 
 const Layout = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchGroupedRecipes())
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchIngredients())
   }, [])
 
   return (

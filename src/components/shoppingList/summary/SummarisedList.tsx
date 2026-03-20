@@ -8,6 +8,7 @@ import IngredientTable from './IngredientTable'
 import RecipeTable from './RecipeTable'
 import { useState } from 'react'
 import ManualItemsTable from './ManualItemsTable'
+import { useRecipeIngredients } from '../../../hooks/recipes/useRecipeIngredients'
 
 type GroupMode = 'ingredient' | 'recipe'
 
@@ -20,6 +21,9 @@ const SummarisedList = () => {
     control
   })
 
+  useRecipeIngredients(selectedRecipies)
+
+
   const selectedIngredients = useWatch({
     name: 'selectedIngredients',
     control
@@ -30,8 +34,13 @@ const SummarisedList = () => {
     control
   })
 
+  const recipeIngredients = useWatch({
+    name: 'recipeIngredients',
+    control
+  })
+
   const unifiedIngredients = buildUnifiedIngredients(
-    selectedRecipies,
+    recipeIngredients,
     selectedIngredients
   )
 

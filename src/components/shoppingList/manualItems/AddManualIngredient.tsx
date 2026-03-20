@@ -7,21 +7,37 @@ import type {
 } from '../../../types/shoppingList/ShoppingListForm'
 import TextInput from '../../form/inputs/TextInput'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { getIngredientOptions } from '../../../hooks/ingredients/useIngredientOptions'
-import { INGREDIENTS } from '../../../constants/Data/Ingredients/Ingredients'
 import { Fragment } from 'react/jsx-runtime'
+import type { SelectOption } from '../../../types/form/SelectOption'
+import type { RootState } from '../../../store'
+import { useAppSelector } from '../../../store/hooks'
+import {
+  cookingUnitOptions,
+  CookingUnits
+} from '../../../constants/Recipes/cookingUnit'
+import { useTranslation } from 'react-i18next'
 
 const defaultIngredient: ManualIngredient = {
   id: 1,
-  amount: 1,
-  unit: 'g'
+  grams: 0,
+  unit: CookingUnits.GRAM
 }
 
 const AddManualIngredient = () => {
+  const { t } = useTranslation()
   const { control } = useFormContext<ShoppingListForm>()
 
-  const ingredientOptions = getIngredientOptions(INGREDIENTS)
+  const ingredients = useAppSelector(
+    (state: RootState) => state.ingredients.data
+  )
 
+  const ingredientOptions: SelectOption<number>[] = ingredients.map(
+    (ingredient) => ({
+      value: ingredient.id,
+      label: ingredient.name,
+      density: ingredient.density
+    })
+  )
   const {
     fields: ingredientList,
     append,
@@ -35,6 +51,8 @@ const AddManualIngredient = () => {
   const handleAddIngredient = () => {
     append(defaultIngredient)
   }
+
+  if (ingredients?.length === 0) return null
 
   return (
     <Grid container spacing={2} maxWidth={500} justifySelf='center'>
@@ -50,15 +68,16 @@ const AddManualIngredient = () => {
             </Grid>
             <Grid size={{ xs: 3.5 }}>
               <TextInput
-                name={`selectedIngredients.${index}.amount`}
+                name={`selectedIngredients.${index}.grams`}
                 label='Amount'
                 type='number'
               />
             </Grid>
             <Grid size={{ xs: 3.5 }}>
-              <TextInput
+              <Selector
                 name={`selectedIngredients.${index}.unit`}
                 label='Unit'
+                options={cookingUnitOptions(t)}
               />
             </Grid>
             <Grid size={{ xs: 1 }} alignContent={'center'}>

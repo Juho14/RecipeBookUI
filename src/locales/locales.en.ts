@@ -22,6 +22,20 @@ const en = {
   },
   form: {
     required: 'This field is required'
+  },
+  cookingUnits: {
+    g: 'g',
+    grams: 'Grams',
+    ml: 'ml',
+    mls: 'Milliliters',
+    tbspn: 'tbspn',
+    tbspns: 'Tablespoons',
+    tspn: 'tspn',
+    tspns: 'Teaspoons',
+    dl: 'dl',
+    dls: 'Desilitres',
+    l: 'l',
+    ls: 'Litres'
   }
 }
 

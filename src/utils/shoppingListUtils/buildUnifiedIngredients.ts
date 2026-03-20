@@ -1,39 +1,34 @@
-import type { Recipe } from '../../types/Recipe/Recipe'
+import type { IngredientsForRecipeDTO } from '../../types/Recipe/RecipeIngredient'
 import type { ManualIngredient } from '../../types/shoppingList/ShoppingListForm'
-import type { UnifiedIngredient } from '../../types/shoppingList/UnifiedIngredient'
+import {
+  manualSource,
+  type UnifiedIngredient
+} from '../../types/shoppingList/UnifiedIngredient'
+import { mapRecipeIngredientsToUnified } from '../recipeUtils/mapRecipeIngredientsToUnified'
 
-const getIngredientsFromRecipes = (recipes: Recipe[]): UnifiedIngredient[] => {
-  return recipes.flatMap((recipe) =>
-    recipe.ingredients.map((recipeIng) => ({
-      ingredientId: recipeIng.ingredient.id,
-      amount: recipeIng.amount ?? recipeIng.grams,
-      unit: recipeIng.cookingUnit,
-      source: {
-        type: 'recipe',
-        recipeId: recipe.id,
-        recipeName: recipe.name
-      }
-    }))
-  )
+const getIngredientsFromRecipes = (
+  ingredients: IngredientsForRecipeDTO[]
+): UnifiedIngredient[] => {
+  return mapRecipeIngredientsToUnified(ingredients)
 }
 
 const getManualIngredients = (
   manual: ManualIngredient[]
 ): UnifiedIngredient[] => {
-  return manual.map((ingredient) => ({
-    ingredientId: ingredient.id,
-    amount: ingredient.amount,
-    unit: ingredient.unit,
-    source: { type: 'manual' }
+  return manual.map((i) => ({
+    ingredientId: i.id,
+    grams: i.grams,
+    unit: i.unit,
+    source: manualSource
   }))
 }
 
 export const buildUnifiedIngredients = (
-  recipes: Recipe[],
+  ingredients: IngredientsForRecipeDTO[],
   manual: ManualIngredient[]
 ): UnifiedIngredient[] => {
   return [
-    ...getIngredientsFromRecipes(recipes),
+    ...getIngredientsFromRecipes(ingredients),
     ...getManualIngredients(manual)
   ]
 }
